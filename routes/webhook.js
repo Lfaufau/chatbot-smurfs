@@ -1,5 +1,5 @@
-var chatservices = require('../server/chatservice');
-var authenticate = chatservices.authenticate;
+var chatService = require('../server/chatService');
+var authenticate = chatService.authenticate;
 var express = require('express');
 var router = express.Router();
 
@@ -14,4 +14,3 @@ router.get('/', function(req, res, next) {
 });
 
 module.exports = router;
-
