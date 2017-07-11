@@ -1,4 +1,4 @@
-var chatservices = require('~/server/chatservice');
+var chatservices = require('../server/chatservice');
 var authenticate = chatservices.authenticate;
 var express = require('express');
 var router = express.Router();
