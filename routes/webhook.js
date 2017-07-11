@@ -13,7 +13,7 @@ router.get('/', function(req, res, next) {
     }
 });
 
-router.post('/webhook', function (req, res) {
+router.post('/', function (req, res) {
   var data = req.body;
 
   // Make sure this is a page subscription
@@ -42,11 +42,6 @@ router.post('/webhook', function (req, res) {
     res.sendStatus(200);
   }
 });
-
-function receivedMessage(event) {
-  // Putting a stub for now, we'll expand it in the following steps
-  console.log("Message data: ", event.message);
-}
 
 
 function receivedMessage(event) {
