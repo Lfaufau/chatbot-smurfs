@@ -1,5 +1,6 @@
 var chatService = require('../server/chatService');
 var authenticate = chatService.authenticate;
+var sendTextMessage = chatService.sendTextMessage;
 var express = require('express');
 var router = express.Router();
 
@@ -16,16 +17,11 @@ router.get('/', function(req, res, next) {
 router.post('/', function (req, res) {
   var data = req.body;
 
-  // Make sure this is a page subscription
   if (data.object === 'page') {
 
-    // Iterate over each entry - there may be multiple if batched
     data.entry.forEach(function(entry) {
-      var pageID = entry.id;
-      var timeOfEvent = entry.time;
-
-      // Iterate over each messaging event
       entry.messaging.forEach(function(event) {
+        var senderId = event.sender.id;
         if (event.message) {
           receivedMessage(event);
         } else {
@@ -59,6 +55,12 @@ function receivedMessage(event) {
   var messageText = message.text;
   var messageAttachments = message.attachments;
 
+  if (event.message) {
+    sendTextMessage(senderID, event.message.text);
+  }
+}
+
+/*
   if (messageText) {
 
     // If we receive a text message, check to see if it matches a keyword
@@ -102,6 +104,6 @@ function callSendAPI(messageData) {
       console.error(error);
     }
   });
-}
+}*/
 
 module.exports = router;
