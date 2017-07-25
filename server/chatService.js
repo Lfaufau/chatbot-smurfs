@@ -58,11 +58,13 @@ function sendTextMessage(recipientId, messageText) {
 }
 
 function sendGreetingMessage(recipientId) {
+  console.log("let's process this greeting");
   var userName = /*userService.getUser(recipientId);
   if (!userName)
   {
       userName =*/ getUserName(recipientId);
   //}
+  console.log("client's name : " + userName);
   var messageData = {
     recipient: {
       id: recipientId
@@ -143,6 +145,7 @@ function callSendAPI(messageData) {
 
 function getUserName(senderID) {
   var senderName = null;
+  console.log("Asking fb for the clients name");
   request(
     'https://graph.facebook.com/v2.6/' + senderId +
     '?fields=first_name&access_token='
