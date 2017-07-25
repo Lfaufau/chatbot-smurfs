@@ -60,7 +60,8 @@ function receivedMessage(event) {
 
   if (event.message) {
     //sendTextMessage(senderID, event.message.text);
-    getGeolocalisation(message.text);
+    var fullWeather = getFullWeather(event.message);
+    sendTextMessage(senderID, fullWeather.text);
   }
 }
 
