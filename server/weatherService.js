@@ -35,7 +35,13 @@ function getWeatherForecast(lat, lng) {
   });
 }
 
+function getFullWeather(cityName) {
+  res = getGeolocalisation(cityName);
+  return getWeatherForecast(res.geometry.location.lat, res.geometry.location.lng);
+}
+
 module.exports =  {
   getGeolocalisation: getGeolocalisation,
-  getWeatherForecast: getWeatherForecast
+  getWeatherForecast: getWeatherForecast,
+  getFullWeather : getFullWeather
 }
