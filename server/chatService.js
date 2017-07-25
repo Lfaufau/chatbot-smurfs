@@ -45,7 +45,8 @@ function getUserName(senderID) {
     if (!error) {
       console.log(JSON.stringify(body));
       senderName = body.first_name;
-      console.log("Inside getUserName, clients name is : " + senderName + "and " + body.first_name);
+      sendTextMessage(senderID, "Bonjour" + body.first_name);
+      console.log("Inside getUserName, clients name is : " + senderName + " and " + body.first_name);
     }});
     console.log("Inside getUserName, clients name is : " + senderName);
     return senderName;
