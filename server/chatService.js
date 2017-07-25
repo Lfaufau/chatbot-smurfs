@@ -44,7 +44,7 @@ function getUserName(senderID) {
   }, function (error, response, body) {
     if (!error) {
       senderName = body.first_name;
-      console.log("Inside getUserName, clients name is : " + senderName);
+      console.log("Inside getUserName, clients name is : " + senderName + "and " + body.first_name);
     }});
     console.log("Inside getUserName, clients name is : " + senderName);
     return senderName;
