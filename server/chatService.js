@@ -18,7 +18,7 @@ function getUserName(senderID) {
   var senderName = null;
   console.log("Asking fb for the clients name");
   request(
-    'https://graph.facebook.com/v2.6/' + senderId +
+    'https://graph.facebook.com/v2.6/' + senderID +
     '?fields=first_name&access_token='
     + PAGE_ACCESS_TOKEN
   ).then(function(result) {
