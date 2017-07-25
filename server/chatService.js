@@ -24,7 +24,9 @@ function getUserName(senderID) {
   ).then(function(result) {
     senderName = JSON.parse(result).first_name;
     //userService.addUser(senderId, { name: senderName });
-  })
+  }).catch(function(err) {
+              console.error("Facebook API error: ", err);
+            }
   return senderName;
 }
 
