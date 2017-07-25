@@ -1,6 +1,9 @@
 var chatService = require('../server/chatService');
 var authenticate = chatService.authenticate;
 var sendTextMessage = chatService.sendTextMessage;
+var weatherService = require('../server/weatherService.js');
+var getGeolocalisation = weatherService.getGeolocalisation;
+var getFullWeather = weatherService.getFullWeather;
 var express = require('express');
 var router = express.Router();
 
@@ -56,9 +59,11 @@ function receivedMessage(event) {
   var messageAttachments = message.attachments;
 
   if (event.message) {
-    sendTextMessage(senderID, event.message.text);
+    //sendTextMessage(senderID, event.message.text);
+    getGeolocalisation(message.text);
   }
 }
+
 
 /*
   if (messageText) {
