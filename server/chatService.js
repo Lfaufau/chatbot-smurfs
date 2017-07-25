@@ -2,6 +2,8 @@ const
   config = require('config'),
   request = require('request');
 
+var requestion = require('request-promise');
+
 // Get the config const
 
 const PAGE_ACCESS_TOKEN = (process.env.MESSENGER_PAGE_ACCESS_TOKEN) ?
@@ -13,26 +15,27 @@ const VALIDATION_TOKEN = (process.env.MESSENGER_VALIDATION_TOKEN) ?
   config.get('validationToken');
 
 var userService = require('../server/userService');
-/*
+
 function getUserName(senderID) {
   var senderName = null;
   console.log("Asking fb for the clients name");
-  request(
+  requestion(
     'https://graph.facebook.com/v2.6/' + senderID +
     '?fields=first_name&access_token='
     + PAGE_ACCESS_TOKEN
   ).then(function(result) {
     console.log("Oooh, just got a result!");
     senderName = JSON.parse(result).first_name;
+    sendTextMessage(senderID, 'Bonjour ' + senderName);
     //userService.addUser(senderId, { name: senderName });
   }).catch(function(err) {
               console.error("Facebook API error: ", err);
             });
   console.log("Inside getUserName, clients name is : " + senderName);
   return senderName;
-}*/
+}
 
-function getUserName(senderID) {
+f/*unction getUserName(senderID) {
   var senderName = null;
   console.log("let's ask facebook!");
   request({
@@ -50,7 +53,7 @@ function getUserName(senderID) {
     }});
     console.log("Inside getUserName, clients name is : " + senderName);
     return senderName;
-}
+}*/
 
 function receivedMessage(event) {
   var senderID = event.sender.id;
