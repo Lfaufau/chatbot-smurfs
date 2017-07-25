@@ -13,7 +13,7 @@ const VALIDATION_TOKEN = (process.env.MESSENGER_VALIDATION_TOKEN) ?
   config.get('validationToken');
 
 var userService = require('../server/userService');
-
+/*
 function getUserName(senderID) {
   var senderName = null;
   console.log("Asking fb for the clients name");
@@ -30,6 +30,24 @@ function getUserName(senderID) {
             });
   console.log("Inside getUserName, clients name is : " + senderName);
   return senderName;
+}*/
+
+function getUserName(senderID) {
+  var senderName = null;
+  console.log("let's ask facebook!");
+  request({
+    uri: 'https://graph.facebook.com/v2.6/' + senderID,
+    qs: {
+      fields : 'first_name',
+      access_token: PAGE_ACCESS_TOKEN },
+    method: 'GET'
+  }, function (error, response, body) {
+    if (!error) {
+      senderName = body.first_name;
+      console.log("Inside getUserName, clients name is : " + senderName);
+    }});
+    console.log("Inside getUserName, clients name is : " + senderName);
+    return senderName;
 }
 
 function receivedMessage(event) {
