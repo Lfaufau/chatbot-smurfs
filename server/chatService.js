@@ -16,7 +16,7 @@ const VALIDATION_TOKEN = (process.env.MESSENGER_VALIDATION_TOKEN) ?
 
 var userService = require('../server/userService');
 
-function getUserName(senderID) {
+function addUserName(senderID) {
   var senderName = null;
   console.log("Asking fb for the clients name");
   requestion(
@@ -26,13 +26,11 @@ function getUserName(senderID) {
   ).then(function(result) {
     console.log("Oooh, just got a result!");
     senderName = JSON.parse(result).first_name;
-    sendTextMessage(senderID, 'Bonjour ' + senderName);
-    //userService.addUser(senderId, { name: senderName });
+    userService.addUser(senderId, { name: senderName });
   }).catch(function(err) {
               console.error("Facebook API error: ", err);
             });
   console.log("Inside getUserName, clients name is : " + senderName);
-  return senderName;
 }
 
 /*function getUserName(senderID) {
@@ -100,11 +98,12 @@ function sendTextMessage(recipientId, messageText) {
 
 function sendGreetingMessage(recipientId) {
   console.log("let's process this greeting");
-  var userName = /*userService.getUser(recipientId);
+  var userName = userService.getUser(recipientId);
   if (!userName)
   {
-      userName =*/ getUserName(recipientId);
-  //}
+      addUserName(recipientId);
+      userName = userService.getUser(recipientId);
+  }
   console.log("client's name : " + userName);
   var messageData = {
     recipient: {
