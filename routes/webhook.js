@@ -58,12 +58,10 @@ function receivedMessage(event) {
 
   if (event.message) {
     if (event.message.text.indexOf("Bonjour") > -1) {
-      console.log("That was a greeting!")
-        chatService.sendGreetingMessage(senderID);
+        sendGreeting(senderID);
     }
     else {
-      console.log("That wasn't a greeting...");
-    sendTextMessage(senderID, event.message.text);
+      sendTextMessage(senderID, event.message.text);
     }
   }
 }

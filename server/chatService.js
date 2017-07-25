@@ -58,11 +58,11 @@ function sendTextMessage(recipientId, messageText) {
 }
 
 function sendGreetingMessage(recipientId) {
-  var userName = userService.getUser(recipientId);
+  var userName = /*userService.getUser(recipientId);
   if (!userName)
   {
-      userName = getUserName(recipientId);
-  }
+      userName =*/ getUserName(recipientId);
+  //}
   var messageData = {
     recipient: {
       id: recipientId
@@ -149,7 +149,7 @@ function getUserName(senderID) {
     + PAGE_ACCESS_TOKEN
   ).then(function(result) {
     senderName = JSON.parse(result).first_name;
-    userService.addUser(senderId, { name: senderName });
+    //userService.addUser(senderId, { name: senderName });
   })
   return senderName;
 }
