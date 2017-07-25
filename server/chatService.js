@@ -26,7 +26,7 @@ function getUserName(senderID) {
     //userService.addUser(senderId, { name: senderName });
   }).catch(function(err) {
               console.error("Facebook API error: ", err);
-            }
+            });
   return senderName;
 }
 
