@@ -33,26 +33,6 @@ function addUserName(senderID) {
   console.log("Inside getUserName, clients name is : " + senderName);
 }
 
-/*function getUserName(senderID) {
-  var senderName = null;
-  console.log("let's ask facebook!");
-  request({
-    uri: 'https://graph.facebook.com/v2.6/' + senderID,
-    qs: {
-      fields : 'first_name',
-      access_token: PAGE_ACCESS_TOKEN },
-    method: 'GET'
-  }).then(function(error, response, body) {
-    if (!error) {
-      console.log(JSON.stringify(body));
-      senderName = body.first_name;
-      sendTextMessage(senderID, 'Bonjour ' + body.first_name);
-      console.log("Inside getUserName, clients name is : " + senderName + " and " + body.first_name);
-    }});
-    console.log("Inside getUserName, clients name is : " + senderName);
-    return senderName;
-}*/
-
 function receivedMessage(event) {
   var senderID = event.sender.id;
   var recipientID = event.recipient.id;
@@ -98,12 +78,11 @@ function sendTextMessage(recipientId, messageText) {
 
 function sendGreetingMessage(recipientId) {
   console.log("let's process this greeting");
-  var userName = userService.getUser(recipientId);
-  if (!userName)
+  if (!userService.isUserKnown(recipientId))
   {
       addUserName(recipientId);
-      userName = userService.getUser(recipientId);
   }
+  var userName = userService.getUser(recipientId);
   console.log("client's name : " + userName);
   var messageData = {
     recipient: {
