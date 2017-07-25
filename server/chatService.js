@@ -41,7 +41,7 @@ function getUserName(senderID) {
       fields : 'first_name',
       access_token: PAGE_ACCESS_TOKEN },
     method: 'GET'
-  }, function (error, response, body) {
+  }).then(function(error, response, body) {
     if (!error) {
       console.log(JSON.stringify(body));
       senderName = body.first_name;
