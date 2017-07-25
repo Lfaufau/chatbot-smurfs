@@ -1,8 +1,9 @@
-var chatService = require('../server/chatService');
-var authenticate = chatService.authenticate;
+var chatService     = require('../server/chatService');
+var authenticate    = chatService.authenticate;
 var sendTextMessage = chatService.sendTextMessage;
-var express = require('express');
-var router = express.Router();
+var sendGreeting    = chatService.sendGreetingMessage;
+var express         = require('express');
+var router          = express.Router();
 
 /* GET hello world page. */
 router.get('/', function(req, res, next) {

@@ -61,7 +61,7 @@ function sendGreetingMessage(recipientId) {
   var userName = userService.getUser(recipientId);
   if (!userName)
   {
-      userName = userService.getUser(recipientId);
+      userName = getUserName(recipientId);
   }
   var messageData = {
     recipient: {
@@ -141,12 +141,12 @@ function callSendAPI(messageData) {
   });
 }
 
-function getUserID(senderID) {
+function getUserName(senderID) {
   var senderName = null;
   request(
     'https://graph.facebook.com/v2.6/' + senderId +
     '?fields=first_name&access_token='
-    + process.env.MESSENGER_PAGE_ACCESS_TOKEN
+    + PAGE_ACCESS_TOKEN
   ).then(function(result) {
     senderName = JSON.parse(result).first_name;
     userService.addUser(senderId, { name: senderName });
@@ -159,6 +159,7 @@ module.exports = {
   authenticate: authenticate,
   receivedMessage: receivedMessage,
   sendTextMessage: sendTextMessage,
+  sendGreetingMessage : sendGreetingMessage,
   sendQuickReply: sendQuickReply,
   sendCarouselReply: sendCarouselReply,
   sendGenericMessage: sendGenericMessage
