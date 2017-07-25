@@ -1,6 +1,3 @@
-var addUser = userService.addUser;
-var getUser = userService.getUser;
-
 const
   config = require('config'),
   request = require('request');
