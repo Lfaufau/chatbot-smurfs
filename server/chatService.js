@@ -68,7 +68,7 @@ function sendGreetingMessage(recipientId) {
       id: recipientId
     },
     message: {
-      text: "Bonjour " + userName;
+      text: "Bonjour " + "userName";
     }
   };
 
