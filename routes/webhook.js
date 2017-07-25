@@ -57,7 +57,7 @@ function receivedMessage(event) {
   var messageAttachments = message.attachments;
 
   if (event.message) {
-    if (str.indexOf("Bonjour") > -1) {
+    if (event.message.text.indexOf("Bonjour") > -1) {
       console.log("That was a greeting!")
         chatService.sendGreetingMessage(senderID);
     }
