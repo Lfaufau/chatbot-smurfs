@@ -12,7 +12,7 @@ const VALIDATION_TOKEN = (process.env.MESSENGER_VALIDATION_TOKEN) ?
   (process.env.MESSENGER_VALIDATION_TOKEN) :
   config.get('validationToken');
 
-var userService = require('../server/chatService').getUser;
+var userService = require('../server/userService');
 
 function receivedMessage(event) {
   var senderID = event.sender.id;
@@ -58,10 +58,10 @@ function sendTextMessage(recipientId, messageText) {
 }
 
 function sendGreetingMessage(recipientId) {
-  var userName = getUser(recipientId);
+  var userName = userService.getUser(recipientId);
   if (!userName)
   {
-      userName = getUser(recipientId);
+      userName = userService.getUser(recipientId);
   }
   var messageData = {
     recipient: {
@@ -149,7 +149,7 @@ function getUserID(senderID) {
     + process.env.MESSENGER_PAGE_ACCESS_TOKEN
   ).then(function(result) {
     senderName = JSON.parse(result).first_name;
-    addUser(senderID, senderName);}
+    userService.addUser(senderID, senderName);}
   return senderName;
 }
 
