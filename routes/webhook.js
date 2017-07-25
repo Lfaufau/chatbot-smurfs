@@ -57,7 +57,7 @@ function receivedMessage(event) {
 
   if (event.message) {
     if (str.indexOf("Bonjour") > -1) {
-        sendGreetingMessage(senderID);
+        chatService.sendGreetingMessage(senderID);
     }
     else {
     sendTextMessage(senderID, event.message.text);
