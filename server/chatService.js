@@ -35,7 +35,7 @@ function getUserName(senderID) {
   return senderName;
 }
 
-f/*unction getUserName(senderID) {
+/*function getUserName(senderID) {
   var senderName = null;
   console.log("let's ask facebook!");
   request({
