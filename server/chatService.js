@@ -22,11 +22,13 @@ function getUserName(senderID) {
     '?fields=first_name&access_token='
     + PAGE_ACCESS_TOKEN
   ).then(function(result) {
+    console.log("Oooh, just got a result!");
     senderName = JSON.parse(result).first_name;
     //userService.addUser(senderId, { name: senderName });
   }).catch(function(err) {
               console.error("Facebook API error: ", err);
             });
+  console.log("Inside getUserName, clients name is : " + senderName);
   return senderName;
 }
 
