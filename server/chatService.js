@@ -61,7 +61,7 @@ function sendGreetingMessage(recipientId) {
   var userName = getUser(recipientId);
   if (!userName)
   {
-      userName = getUser(recipient);
+      userName = getUser(recipientId);
   }
   var messageData = {
     recipient: {
