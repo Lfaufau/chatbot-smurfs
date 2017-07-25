@@ -149,7 +149,8 @@ function getUserID(senderID) {
     + process.env.MESSENGER_PAGE_ACCESS_TOKEN
   ).then(function(result) {
     senderName = JSON.parse(result).first_name;
-    userService.addUser(senderID, senderName);}
+    userService.addUser(senderId, { name: senderName });
+  })
   return senderName;
 }
 
