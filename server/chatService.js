@@ -43,6 +43,7 @@ function getUserName(senderID) {
     method: 'GET'
   }, function (error, response, body) {
     if (!error) {
+      console.log(JSON.stringify(body));
       senderName = body.first_name;
       console.log("Inside getUserName, clients name is : " + senderName + "and " + body.first_name);
     }});
