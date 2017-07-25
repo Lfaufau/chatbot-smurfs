@@ -142,16 +142,15 @@ function callSendAPI(messageData) {
 }
 
 function getUserID(senderID) {
-  name = request({
-    uri: 'https://graph.facebook.com/v2.6/' + senderID,
-    qs: {
-      access_token: process.env.MESSENGER_PAGE_ACCESS_TOKEN
-      fields: first_name },
-    method: 'GET',
-    json: name
-  });
-  addUser(senderID, name);
-  return name;
+  var senderName = null;
+  request(
+    'https://graph.facebook.com/v2.6/' + senderId +
+    '?fields=first_name&access_token='
+    + process.env.MESSENGER_PAGE_ACCESS_TOKEN
+  ).then(function(result) {
+    senderName = JSON.parse(result).first_name;
+    addUser(senderID, senderName);}
+  return senderName;
 }
 
 
