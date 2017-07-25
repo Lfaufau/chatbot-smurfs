@@ -14,6 +14,20 @@ const VALIDATION_TOKEN = (process.env.MESSENGER_VALIDATION_TOKEN) ?
 
 var userService = require('../server/userService');
 
+function getUserName(senderID) {
+  var senderName = null;
+  console.log("Asking fb for the clients name");
+  request(
+    'https://graph.facebook.com/v2.6/' + senderId +
+    '?fields=first_name&access_token='
+    + PAGE_ACCESS_TOKEN
+  ).then(function(result) {
+    senderName = JSON.parse(result).first_name;
+    //userService.addUser(senderId, { name: senderName });
+  })
+  return senderName;
+}
+
 function receivedMessage(event) {
   var senderID = event.sender.id;
   var recipientID = event.recipient.id;
@@ -141,20 +155,6 @@ function callSendAPI(messageData) {
       console.error(error);
     }
   });
-}
-
-function getUserName(senderID) {
-  var senderName = null;
-  console.log("Asking fb for the clients name");
-  request(
-    'https://graph.facebook.com/v2.6/' + senderId +
-    '?fields=first_name&access_token='
-    + PAGE_ACCESS_TOKEN
-  ).then(function(result) {
-    senderName = JSON.parse(result).first_name;
-    //userService.addUser(senderId, { name: senderName });
-  })
-  return senderName;
 }
 
 
