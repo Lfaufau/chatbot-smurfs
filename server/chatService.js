@@ -1,6 +1,3 @@
-var addUser = userService.addUser;
-var getUser = userService.getUser;
-
 const
   config = require('config'),
   request = require('request');
@@ -14,6 +11,8 @@ const PAGE_ACCESS_TOKEN = (process.env.MESSENGER_PAGE_ACCESS_TOKEN) ?
 const VALIDATION_TOKEN = (process.env.MESSENGER_VALIDATION_TOKEN) ?
   (process.env.MESSENGER_VALIDATION_TOKEN) :
   config.get('validationToken');
+
+var userService = require('../server/chatService').getUser;
 
 function receivedMessage(event) {
   var senderID = event.sender.id;
@@ -51,7 +50,25 @@ function sendTextMessage(recipientId, messageText) {
       id: recipientId
     },
     message: {
-      text: messageText + getUser(senderID)[first_name]
+      text: messageText
+    }
+  };
+
+  callSendAPI(messageData);
+}
+
+function sendGreetingMessage(recipientId) {
+  var userName = getUser(recipientId);
+  if (!userName)
+  {
+      userName = getUser(recipient);
+  }
+  var messageData = {
+    recipient: {
+      id: recipientId
+    },
+    message: {
+      text: "Bonjour " + userName;
     }
   };
 
@@ -133,7 +150,9 @@ function getUserID(senderID) {
     json: name
   })
   addUser(senderID, name)
+  return name;
 }
+
 
 module.exports = {
   authenticate: authenticate,

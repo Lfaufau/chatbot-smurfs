@@ -56,9 +56,16 @@ function receivedMessage(event) {
   var messageAttachments = message.attachments;
 
   if (event.message) {
+    if (str.indexOf("Bonjour") > -1) {
+        sendGreetingMessage(senderID);
+    }
+    else {
     sendTextMessage(senderID, event.message.text);
+    }
   }
 }
+
+
 
 /*
   if (messageText) {
