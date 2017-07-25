@@ -1,3 +1,6 @@
+var addUser = userService.addUser;
+var getUser = userService.getUser;
+
 const
   config = require('config'),
   request = require('request');
@@ -48,7 +51,7 @@ function sendTextMessage(recipientId, messageText) {
       id: recipientId
     },
     message: {
-      text: messageText
+      text: messageText + getUser(senderID)[first_name]
     }
   };
 
@@ -119,6 +122,17 @@ function callSendAPI(messageData) {
       console.error(error);
     }
   });
+}
+
+function getUserID(senderID) {
+  name = request({
+    uri: 'https://graph.facebook.com/v2.6/' + senderID +
+              '?fields=first_name&access_token=',
+    qs: { access_token: process.env.MESSENGER_PAGE_ACCESS_TOKEN }
+    method: 'GET',
+    json: name
+  })
+  addUser(senderID, name)
 }
 
 module.exports = {
