@@ -26,7 +26,7 @@ function addUserName(senderID) {
   ).then(function(result) {
     console.log("Oooh, just got a result!");
     senderName = JSON.parse(result).first_name;
-    userService.addUser(senderId, { name: senderName });
+    userService.addUser(senderID, senderName);
   }).catch(function(err) {
               console.error("Facebook API error: ", err);
             });
