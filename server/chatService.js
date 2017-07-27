@@ -1,6 +1,3 @@
-var addUser = userService.addUser;
-var getUser = userService.getUser;
-
 const
   config = require('config'),
   request = require('request');
@@ -51,7 +48,7 @@ function sendTextMessage(recipientId, messageText) {
       id: recipientId
     },
     message: {
-      text: messageText + getUser(senderID)[first_name]
+      text: messageText
     }
   };
 
@@ -136,7 +133,7 @@ function callSendAPI(messageData) {
       console.error(error);
     }
   });
-}
+}²
 
 module.exports = {
   authenticate: authenticate,
