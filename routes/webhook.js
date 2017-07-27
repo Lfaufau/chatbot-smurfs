@@ -62,13 +62,13 @@ function receivedMessage(event) {
   var messageAttachments = message.attachments;
 
   getGeolocalisation(messageText, function(res) {
-    console.los(JSON.stringify(res));
+    console.log(JSON.stringify(res));
     if (event.message) {
       if (messageText.toUpperCase.indexOf("BONJOUR") > -1 || messageText.toUpperCase.indexOf("SALUT") > -1) {
           sendGreeting(senderID);
       }
       else if (res.results[0]){
-        console.los(JSON.stringify(res.results[0]));
+        console.log(JSON.stringify(res.results[0]));
         getWeatherForecast(event.message.text, senderID);
       }
       else {
