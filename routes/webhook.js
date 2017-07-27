@@ -1,6 +1,7 @@
 var chatService = require('../server/chatService');
 var authenticate = chatService.authenticate;
 var sendTextMessage = chatService.sendTextMessage;
+var sendWebMessage = chatService.sendWebMessage;
 var express = require('express');
 var router = express.Router();
 
@@ -60,7 +61,7 @@ function receivedMessage(event) {
         sendGreetingMessage(senderID);
     }
     else {
-    sendTextMessage(senderID, event.message.text);
+    sendWebMessage(senderID, event.message.text);
     }
   }
 }

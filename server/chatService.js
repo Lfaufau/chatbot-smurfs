@@ -58,6 +58,19 @@ function sendTextMessage(recipientId, messageText) {
   callSendAPI(messageData);
 }
 
+function sendWebMessage(recipientId, cityName) {
+  var messageData = {
+    recipient: {
+      id: recipientId
+    },
+    message: {
+      text: "https://fr.search.yahoo.com/search;_ylt=A9mSs2d65XlZHSAAckpjAQx.;_ylc=X1MDMjExNDcxNjAwMwRfcgMyBGZyA3VoM19uZXdzX3dlYl9ncwRncHJpZANoWUl1T19pUVEuQy5lV2daYm1EY1FBBG5fcnNsdAMwBG5fc3VnZwM1BG9yaWdpbgNmci5zZWFyY2gueWFob28uY29tBHBvcwMwBHBxc3RyAwRwcXN0cmwDBHFzdHJsAzI4BHF1ZXJ5A2FyZ2VudGV1aWwlMjBtJUMzJUE5dCVDMyVBOW8EdF9zdG1wAzE1MDExNjA4Mjk-?p=" + cityName + "+m%C3%A9t%C3%A9o&fr2=sb-top-fr.search&fr=uh3_news_web_gs"
+    }
+  };
+
+  callSendAPI(messageData);
+}
+
 function authenticate(req) {
   if (req.query['hub.mode'] === 'subscribe' &&
     req.query['hub.verify_token'] === VALIDATION_TOKEN) {
