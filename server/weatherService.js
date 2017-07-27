@@ -12,23 +12,22 @@ const WEATHER_API_TOKEN = (process.env.WEATHER_API_TOKEN) ?
   config.get('weatherApiToken');
 
 function getGeolocalisation(cityName) {
-  request({
+  console.log("asking googlemaps");
+  return request({
     uri: 'https://maps.googleapis.com/maps/api/geocode/json',
     qs: {
       key: GOOGLE_API_TOKEN,
       address: cityName
     },
     method: 'GET'
-  }).then(function(request) {
-    console.log(JSON.parse(request).results.geometry.location.lat);
-    return request;
   });
-  console.log("googlemaps");
 }
 
 
 
 function getWeatherForecast(lat, lng) {
+  console.log(" Entering weatherforecast");
+  console.log(lat + ' ' + lng);
   return request({
     uri: 'http://api.openweathermap.org/data/2.5/forecast/daily',
     qs: {
@@ -39,7 +38,7 @@ function getWeatherForecast(lat, lng) {
     },
     method: 'GET'
   });
-  console.log("weatherforecast");
+
 }
 
 function getFullWeather(cityName) {
