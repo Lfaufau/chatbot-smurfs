@@ -64,7 +64,7 @@ function receivedMessage(event) {
   getGeolocalisation(messageText, function(res) {
     console.log(JSON.stringify(res));
     if (event.message) {
-      if (messageText.toUpperCase.indexOf("BONJOUR") > -1 || messageText.toUpperCase.indexOf("SALUT") > -1) {
+      if (messageText.toUpperCase().indexOf("BONJOUR") > -1 || messageText.toUpperCase().indexOf("SALUT") > -1) {
           sendGreeting(senderID);
       }
       else if (res.results[0]){
