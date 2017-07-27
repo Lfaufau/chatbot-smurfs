@@ -33,11 +33,13 @@ function getWeatherForecast(address, recipientID) {
     qs: {
       APPID: WEATHER_API_TOKEN,
       q : address,
-      cnt: 10
+      cnt: 10,
+      units : "metric"
     },
     method: 'GET'
   }).then(function(res) {
-    sendTextMessage(recipientID, "population de" + address + ": " + JSON.parse(res).city.population);
+    result = JSON.parse(res);
+    sendTextMessage(recipientID, "Il fait" result.list[0].day + "°C à "+ result.city.name + "aujourd'hui ");
   });
 
 }
