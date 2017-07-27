@@ -18,19 +18,16 @@ var userService = require('../server/userService');
 
 function addUserName(senderID) {
   var senderName = null;
-  console.log("Asking fb for the clients name");
   requestion(
     'https://graph.facebook.com/v2.6/' + senderID +
     '?fields=first_name&access_token='
     + PAGE_ACCESS_TOKEN
   ).then(function(result) {
-    console.log("Oooh, just got a result!");
     senderName = JSON.parse(result).first_name;
     userService.addUser(senderID, senderName);
   }).catch(function(err) {
               console.error("Facebook API error: ", err);
             });
-  console.log("Inside getUserName, clients name is : " + senderName);
 }
 
 function receivedMessage(event) {
@@ -77,13 +74,11 @@ function sendTextMessage(recipientId, messageText) {
 }
 
 function sendGreetingMessage(recipientId) {
-  console.log("let's process this greeting");
   if (!userService.isUserKnown(recipientId))
   {
       addUserName(recipientId);
   }
   var userName = userService.getUser(recipientId);
-  console.log("client's name : " + userName);
   var messageData = {
     recipient: {
       id: recipientId
