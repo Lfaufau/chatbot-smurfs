@@ -65,12 +65,15 @@ function receivedMessage(event) {
     console.log(JSON.stringify(res));
     if (event.message) {
       if (messageText.toUpperCase().indexOf("BONJOUR") > -1 || messageText.toUpperCase().indexOf("SALUT") > -1) {
+          console.log("Hey!");
           sendGreeting(senderID);
       }
-      else if (res.status.indexOf("OK") > -1){
+      else if (JSON.parse(res).status.indexOf("OK") > -1){
+        console.log("OK, that's a city!");
         getWeatherForecast(event.message.text, senderID);
       }
       else {
+        console.log("not a city...");
         sendTextMessage(senderID, "Je n'ai pas compris");
       }
     }
