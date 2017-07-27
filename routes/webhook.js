@@ -60,7 +60,7 @@ function receivedMessage(event) {
 
   if (event.message) {
     console.log(event.message.text);
-    console.log(JSON.stringify(getGeolocalisation(Lille)));
+    console.log(JSON.stringify(getGeolocalisation("Lille")));
     console.log(getFullWeather(event.message.text));
     sendTextMessage(senderID, event.message.text);
     sendTextMessage(senderID, getFullWeather(event.message.text));
