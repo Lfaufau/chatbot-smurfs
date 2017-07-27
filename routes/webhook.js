@@ -60,11 +60,9 @@ function receivedMessage(event) {
 
   if (event.message) {
     console.log(event.message.text);
-    res = getWeatherForecast("Lille");
     console.log(JSON.stringify(res));
-    console.log(getWeatherForecast(event.message.text));
     sendTextMessage(senderID, event.message.text);
-    sendTextMessage(senderID, getWeatherForecast(event.message.text));
+    getWeatherForecast(event.message.text, senderID);
     //var fullWeather = getFullWeather(event.message);
     //sendTextMessage(senderID, fullWeather.text);
   }

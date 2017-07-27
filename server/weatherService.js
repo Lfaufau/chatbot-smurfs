@@ -23,9 +23,9 @@ function getGeolocalisation(cityName) {
   });
 }
 
-function getWeatherForecast(address) {
+function getWeatherForecast(address, recipientID) {
   console.log(" Entering weatherforecast");
-  return request({
+  request({
     uri: 'http://api.openweathermap.org/data/2.5/forecast/daily',
     qs: {
       APPID: WEATHER_API_TOKEN,
@@ -33,6 +33,8 @@ function getWeatherForecast(address) {
       cnt: 10
     },
     method: 'GET'
+  }).then(function(res) {
+    sendTextMessage(JSON.parse(res).city.population, recipientID);
   });
 
 }
