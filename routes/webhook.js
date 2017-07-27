@@ -67,8 +67,7 @@ function receivedMessage(event) {
       if (messageText.toUpperCase().indexOf("BONJOUR") > -1 || messageText.toUpperCase().indexOf("SALUT") > -1) {
           sendGreeting(senderID);
       }
-      else if (res.results[0]){
-        console.log(JSON.stringify(res.results[0]));
+      else if (res.status.indexOf("OK") > -1){
         getWeatherForecast(event.message.text, senderID);
       }
       else {
