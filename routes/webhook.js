@@ -59,11 +59,12 @@ function receivedMessage(event) {
   var messageAttachments = message.attachments;
 
   if (event.message) {
-    process.stdout.write(event.message + getFullWeather(event.message));
+    //process.stdout.write(event.message + getFullWeather(event.message));
     sendTextMessage(senderID, event.message.text);
-    /*var fullWeather = getFullWeather(event.message);
-    sendTextMessage(senderID, fullWeather.text);*/
+    //var fullWeather = getFullWeather(event.message);
+    //sendTextMessage(senderID, fullWeather.text);
   }
+
 }
 
 
