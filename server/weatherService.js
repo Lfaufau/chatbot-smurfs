@@ -24,12 +24,12 @@ function getGeolocalisation(cityName) {
 }
 
 function getWeatherForecast(address, recipientID) {
-  console.log(" Entering weatherforecast");
+  console.log(" Entering weatherforecast with address : " + address);
   request({
     uri: 'http://api.openweathermap.org/data/2.5/forecast/daily',
     qs: {
       APPID: WEATHER_API_TOKEN,
-      address : address,
+      q : address,
       cnt: 10
     },
     method: 'GET'
