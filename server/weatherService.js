@@ -2,7 +2,7 @@ const
   config = require('config'),
   request = require('request-promise');
 
-var chatService = require('chatService');
+var chatService = require('../chatService');
 var sendTextMessage = chatService.sendTextMessage;
 var sendButtonReply = chatService.sendButtonReply;
 var getLinkYahoo = chatService.getLinkYahoo;
