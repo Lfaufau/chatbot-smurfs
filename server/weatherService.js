@@ -2,6 +2,9 @@ const
   config = require('config'),
   request = require('request-promise');
 
+
+var sendTextMessage = require('../server/chatService').sendTextMessage;
+
 // Get the config const
 const GOOGLE_API_TOKEN = (process.env.GOOGLE_API_TOKEN) ?
   (process.env.GOOGLE_API_TOKEN) :
