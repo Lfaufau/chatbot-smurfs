@@ -62,8 +62,9 @@ function receivedMessage(event) {
   var messageAttachments = message.attachments;
 
   getGeolocalisation(messageText, function(res) {
+    console.los(JSON.stringify(res));
     if (event.message) {
-      if (messageText.indexOf("Bonjour") > -1) {
+      if (messageText.toUpperCase.indexOf("BONJOUR") > -1 || messageText.toUpperCase.indexOf("SALUT") > -1) {
           sendGreeting(senderID);
       }
       else if (res.results[0]){
@@ -71,7 +72,6 @@ function receivedMessage(event) {
         getWeatherForecast(event.message.text, senderID);
       }
       else {
-        console.los(JSON.stringify(res));
         sendTextMessage(senderID, "Je n'ai pas compris");
       }
     }
