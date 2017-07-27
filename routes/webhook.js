@@ -1,4 +1,5 @@
 var chatService     = require('../server/chatService');
+var nluService      = require('../server/nluService');
 var authenticate    = chatService.authenticate;
 var sendTextMessage = chatService.sendTextMessage;
 var sendGreeting    = chatService.sendGreetingMessage;
@@ -57,7 +58,8 @@ function receivedMessage(event) {
   var messageAttachments = message.attachments;
 
   if (event.message) {
-    if (event.message.text.indexOf("Bonjour") > -1) {
+    nluService.ask_Wit(messageText);
+    if (messageText.indexOf("Bonjour") > -1) {
         sendGreeting(senderID);
     }
     else {

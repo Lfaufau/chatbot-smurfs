@@ -26,8 +26,8 @@ function addUserName(senderID) {
     senderName = JSON.parse(result).first_name;
     userService.addUser(senderID, senderName);
   }).catch(function(err) {
-              console.error("Facebook API error: ", err);
-            });
+    console.error("Facebook API error: ", err);
+  });
 }
 
 function receivedMessage(event) {
