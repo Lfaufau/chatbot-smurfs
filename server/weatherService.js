@@ -2,8 +2,10 @@ const
   config = require('config'),
   request = require('request-promise');
 
-
-var sendTextMessage = require('../server/chatService').sendTextMessage;
+var chatService = require('chatService');
+var sendTextMessage = chatService.sendTextMessage;
+var sendButtonReply = chatService.sendButtonReply;
+var getLinkYahoo = chatService.getLinkYahoo;
 
 // Get the config const
 const GOOGLE_API_TOKEN = (process.env.GOOGLE_API_TOKEN) ?
@@ -39,7 +41,7 @@ function getWeatherForecast(address, recipientID) {
     method: 'GET'
   }).then(function(res) {
     result = JSON.parse(res);
-    sendTextMessage(recipientID, "Il fait " + result.list[0].temp.day + "°C à "+ result.city.name + " aujourd'hui ");
+    sendButtonReply(recipientID, "Il fait " + result.list[0].temp.day + "°C à "+ result.city.name + " aujourd'hui ", "Yahoo météo", getLinkYahoo(address));
   });
 
 }

@@ -66,9 +66,7 @@ function receivedMessage(event) {
         sendGreeting(senderID);
     }
     else {
-
     getWeatherForecast(event.message.text, senderID);
-    sendWebMessage(senderID, event.message.text);
     }
   }
 
