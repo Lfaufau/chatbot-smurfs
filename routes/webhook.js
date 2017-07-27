@@ -61,12 +61,19 @@ function receivedMessage(event) {
   var messageText = message.text;
   var messageAttachments = message.attachments;
 
+  var res = JSON.parse(getGeolocalisation(messageText));
+
   if (event.message) {
-    if (event.message.text.indexOf("Bonjour") > -1) {
+    if (messageText.indexOf("Bonjour") > -1) {
         sendGreeting(senderID);
     }
+    else if (res.results[0]){
+      console.los(JSON.stringify(res.results[0]));
+      getWeatherForecast(event.message.text, senderID);
+    }
     else {
-    getWeatherForecast(event.message.text, senderID);
+      console.los(JSON.stringify(res));
+      sendTextMessage(senderID, "Je n'ai pas compris");
     }
   }
 
