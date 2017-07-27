@@ -76,7 +76,8 @@ function sendTextMessage(recipientId, messageText) {
 function sendGreetingMessage(recipientId) {
   if (!userService.isUserKnown(recipientId))
   {
-      addUserName(recipientId);
+    sendTyping(recipientId);
+    addUserName(recipientId);
   }
   var userName = userService.getUser(recipientId);
   var messageData = {
@@ -100,6 +101,17 @@ function authenticate(req) {
     console.error("Failed validation. Make sure the validation tokens match.");
     return false;
   }
+}
+
+function sendTyping(recipientId)
+{
+  var messageData = {
+  recipient: {
+  id: recipientId
+  },
+  sender_action: "typing_on" };
+
+  callSendAPI(messageData);
 }
 
 function sendQuickReply(recipientId, message,  quick_replies) {
@@ -163,6 +175,7 @@ module.exports = {
   receivedMessage: receivedMessage,
   sendTextMessage: sendTextMessage,
   sendGreetingMessage : sendGreetingMessage,
+  sendTyping: sendTyping,
   sendQuickReply: sendQuickReply,
   sendCarouselReply: sendCarouselReply,
   sendGenericMessage: sendGenericMessage
