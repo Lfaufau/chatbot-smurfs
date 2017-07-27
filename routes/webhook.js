@@ -59,8 +59,8 @@ function receivedMessage(event) {
   var messageAttachments = message.attachments;
 
   if (event.message) {
-    process.stdout.write(event.message);
-    process.stdout.write(getFullWeather(event.message.text));
+    Console.log(event.message.text);
+    Console.log(getFullWeather(event.message.text));
     sendTextMessage(senderID, event.message.text);
     sendTextMessage(senderID, getFullWeather(event.message.text));
     //var fullWeather = getFullWeather(event.message);
