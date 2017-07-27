@@ -1,9 +1,13 @@
 var chatService     = require('../server/chatService');
 var authenticate    = chatService.authenticate;
 var sendTextMessage = chatService.sendTextMessage;
+
 var sendGreeting    = chatService.sendGreetingMessage;
-var express         = require('express');
-var router          = express.Router();
+var weatherService = require('../server/weatherService.js');
+var getGeolocalisation = weatherService.getGeolocalisation;
+var getWeatherForecast = weatherService.getWeatherForecast;
+var express = require('express');
+var router = express.Router();
 
 /* GET hello world page. */
 router.get('/', function(req, res, next) {
@@ -61,9 +65,10 @@ function receivedMessage(event) {
         sendGreeting(senderID);
     }
     else {
-      sendTextMessage(senderID, event.message.text);
+    getWeatherForecast(event.message.text, senderID);
     }
   }
+
 }
 
 
