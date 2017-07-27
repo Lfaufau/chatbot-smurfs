@@ -34,7 +34,7 @@ function getWeatherForecast(address, recipientID) {
     },
     method: 'GET'
   }).then(function(res) {
-    sendTextMessage(JSON.parse(res).city.population, recipientID);
+    sendTextMessage(recipientID, "population de" + address + ": " + JSON.parse(res).city.population);
   });
 
 }
