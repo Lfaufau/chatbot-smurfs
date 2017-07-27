@@ -2,6 +2,9 @@ const
   config = require('config'),
   request = require('request-promise');
 
+
+var sendTextMessage = require('../server/chatService').sendTextMessage;
+
 // Get the config const
 const GOOGLE_API_TOKEN = (process.env.GOOGLE_API_TOKEN) ?
   (process.env.GOOGLE_API_TOKEN) :
@@ -12,6 +15,7 @@ const WEATHER_API_TOKEN = (process.env.WEATHER_API_TOKEN) ?
   config.get('weatherApiToken');
 
 function getGeolocalisation(cityName) {
+  console.log("asking googlemaps");
   return request({
     uri: 'https://maps.googleapis.com/maps/api/geocode/json',
     qs: {
@@ -22,22 +26,28 @@ function getGeolocalisation(cityName) {
   });
 }
 
-function getWeatherForecast(lat, lng) {
-  return request({
+function getWeatherForecast(address, recipientID) {
+  console.log(" Entering weatherforecast with address : " + address);
+  request({
     uri: 'http://api.openweathermap.org/data/2.5/forecast/daily',
     qs: {
       APPID: WEATHER_API_TOKEN,
-      lat: lat,
-      lon: lng,
-      cnt: 10
+      q : address,
+      cnt: 10,
+      units : "metric"
     },
     method: 'GET'
+  }).then(function(res) {
+    result = JSON.parse(res);
+    sendTextMessage(recipientID, "Il fait " + result.list[0].temp.day + "°C à "+ result.city.name + " aujourd'hui ");
   });
+
 }
 
 function getFullWeather(cityName) {
-  var res = getGeolocalisation(cityName);
-  return getWeatherForecast(res.geometry.location.lat, res.geometry.location.lng);
+  res = getGeolocalisation(cityName.text);
+  var jsonres = JSON.parse(res);
+  return getWeatherForecast(jsonres.geometry.location.lat, jsonres.geometry.location.lng);
 }
 
 module.exports =  {

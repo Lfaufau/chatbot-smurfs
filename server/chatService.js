@@ -2,6 +2,8 @@ const
   config = require('config'),
   request = require('request');
 
+var requestion = require('request-promise');
+
 // Get the config const
 
 const PAGE_ACCESS_TOKEN = (process.env.MESSENGER_PAGE_ACCESS_TOKEN) ?
@@ -11,6 +13,22 @@ const PAGE_ACCESS_TOKEN = (process.env.MESSENGER_PAGE_ACCESS_TOKEN) ?
 const VALIDATION_TOKEN = (process.env.MESSENGER_VALIDATION_TOKEN) ?
   (process.env.MESSENGER_VALIDATION_TOKEN) :
   config.get('validationToken');
+
+var userService = require('../server/userService');
+
+function addUserName(senderID) {
+  var senderName = null;
+  requestion(
+    'https://graph.facebook.com/v2.6/' + senderID +
+    '?fields=first_name&access_token='
+    + PAGE_ACCESS_TOKEN
+  ).then(function(result) {
+    senderName = JSON.parse(result).first_name;
+    userService.addUser(senderID, senderName);
+  }).catch(function(err) {
+              console.error("Facebook API error: ", err);
+            });
+}
 
 function receivedMessage(event) {
   var senderID = event.sender.id;
@@ -55,13 +73,32 @@ function sendTextMessage(recipientId, messageText) {
   callSendAPI(messageData);
 }
 
+function sendGreetingMessage(recipientId) {
+  if (!userService.isUserKnown(recipientId))
+  {
+    sendTyping(recipientId);
+    addUserName(recipientId);
+  }
+  var userName = userService.getUser(recipientId);
+  var messageData = {
+    recipient: {
+      id: recipientId
+    },
+    message: {
+      text: "Bonjour " + userName
+    }
+  };
+  callSendAPI(messageData);
+}
+
+
 function sendWebMessage(recipientId, cityName) {
   var messageData = {
     recipient: {
       id: recipientId
     },
     message: {
-      text: "https://fr.search.yahoo.com/search;_ylt=A9mSs2d65XlZHSAAckpjAQx.;_ylc=X1MDMjExNDcxNjAwMwRfcgMyBGZyA3VoM19uZXdzX3dlYl9ncwRncHJpZANoWUl1T19pUVEuQy5lV2daYm1EY1FBBG5fcnNsdAMwBG5fc3VnZwM1BG9yaWdpbgNmci5zZWFyY2gueWFob28uY29tBHBvcwMwBHBxc3RyAwRwcXN0cmwDBHFzdHJsAzI4BHF1ZXJ5A2FyZ2VudGV1aWwlMjBtJUMzJUE5dCVDMyVBOW8EdF9zdG1wAzE1MDExNjA4Mjk-?p=" + cityName + "+m%C3%A9t%C3%A9o&fr2=sb-top-fr.search&fr=uh3_news_web_gs"
+        text: "https://fr.search.yahoo.com/search;_ylt=A9mSs2d65XlZHSAAckpjAQx.;_ylc=X1MDMjExNDcxNjAwMwRfcgMyBGZyA3VoM19uZXdzX3dlYl9ncwRncHJpZANoWUl1T19pUVEuQy5lV2daYm1EY1FBBG5fcnNsdAMwBG5fc3VnZwM1BG9yaWdpbgNmci5zZWFyY2gueWFob28uY29tBHBvcwMwBHBxc3RyAwRwcXN0cmwDBHFzdHJsAzI4BHF1ZXJ5A2FyZ2VudGV1aWwlMjBtJUMzJUE5dCVDMyVBOW8EdF9zdG1wAzE1MDExNjA4Mjk-?p=" + cityName + "+m%C3%A9t%C3%A9o&fr2=sb-top-fr.search&fr=uh3_news_web_gs"
       //text: "j'ai ton message tkt"
     }
   };
@@ -78,6 +115,17 @@ function authenticate(req) {
     console.error("Failed validation. Make sure the validation tokens match.");
     return false;
   }
+}
+
+function sendTyping(recipientId)
+{
+  var messageData = {
+  recipient: {
+  id: recipientId
+  },
+  sender_action: "typing_on" };
+
+  callSendAPI(messageData);
 }
 
 function sendQuickReply(recipientId, message,  quick_replies) {
@@ -135,11 +183,20 @@ function callSendAPI(messageData) {
   });
 }
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> test_meteo
 module.exports = {
   authenticate: authenticate,
   receivedMessage: receivedMessage,
   sendTextMessage: sendTextMessage,
+<<<<<<< HEAD
   sendWebMessage: sendWebMessage,
+=======
+  sendGreetingMessage : sendGreetingMessage,
+  sendTyping: sendTyping,
+>>>>>>> test_meteo
   sendQuickReply: sendQuickReply,
   sendCarouselReply: sendCarouselReply,
   sendGenericMessage: sendGenericMessage

@@ -1,6 +1,11 @@
-var chatService = require('../server/chatService');
-var authenticate = chatService.authenticate;
+var chatService     = require('../server/chatService');
+var authenticate    = chatService.authenticate;
 var sendTextMessage = chatService.sendTextMessage;
+
+var sendGreeting    = chatService.sendGreetingMessage;
+var weatherService = require('../server/weatherService.js');
+var getGeolocalisation = weatherService.getGeolocalisation;
+var getWeatherForecast = weatherService.getWeatherForecast;
 var sendWebMessage = chatService.sendWebMessage;
 var express = require('express');
 var router = express.Router();
@@ -57,61 +62,16 @@ function receivedMessage(event) {
   var messageAttachments = message.attachments;
 
   if (event.message) {
-    if (str.indexOf("Bonjour") > -1) {
-        sendGreetingMessage(senderID);
+    if (event.message.text.indexOf("Bonjour") > -1) {
+        sendGreeting(senderID);
     }
     else {
+
+    getWeatherForecast(event.message.text, senderID);
     sendWebMessage(senderID, event.message.text);
     }
   }
+
 }
-
-
-
-/*
-  if (messageText) {
-
-    // If we receive a text message, check to see if it matches a keyword
-    // and send back the example. Otherwise, just echo the text we received.
-    sendTextMessage(recipientID, messageText);
-  } else if (messageAttachments) {
-    sendTextMessage(senderID, "Message with attachment received");
-  }
-}
-
-function sendTextMessage(recipientId, messageText) {
-  var messageData = {
-    recipient: {
-      id: recipientId
-    },
-    message: {
-      text: messageText
-    }
-  };
-
-  callSendAPI(messageData);
-}
-
-function callSendAPI(messageData) {
-  request({
-    uri: 'https://graph.facebook.com/v2.6/me/messages',
-    qs: { access_token: process.env.MESSENGER_PAGE_ACCESS_TOKEN },
-    method: 'POST',
-    json: messageData
-
-  }, function (error, response, body) {
-    if (!error && response.statusCode == 200) {
-      var recipientId = body.recipient_id;
-      var messageId = body.message_id;
-
-      console.log("Successfully sent generic message with id %s to recipient %s",
-        messageId, recipientId);
-    } else {
-      console.error("Unable to send message.");
-      console.error(response);
-      console.error(error);
-    }
-  });
-}*/
 
 module.exports = router;
