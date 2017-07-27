@@ -39,7 +39,7 @@ function getWeatherForecast(address, recipientID) {
     method: 'GET'
   }).then(function(res) {
     result = JSON.parse(res);
-    sendTextMessage(recipientID, "Il fait " + result.list[0].day + "°C à "+ result.city.name + " aujourd'hui ");
+    sendTextMessage(recipientID, "Il fait " + result.list[0].temp.day + "°C à "+ result.city.name + " aujourd'hui ");
   });
 
 }
