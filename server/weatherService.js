@@ -20,7 +20,7 @@ function getGeolocalisation(cityName) {
     },
     method: 'GET'
   }).then(function(request) {
-    console.log(JSON.parse(request.results.geometry.location.lat));
+    console.log(JSON.parse(request).results.geometry.location.lat);
     return request;
   });
   console.log("googlemaps");
