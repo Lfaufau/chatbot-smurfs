@@ -25,7 +25,6 @@ function getGeolocalisation(cityName) {
 
 function getWeatherForecast(address) {
   console.log(" Entering weatherforecast");
-  console.log(lat + ' ' + lng);
   return request({
     uri: 'http://api.openweathermap.org/data/2.5/forecast/daily',
     qs: {
