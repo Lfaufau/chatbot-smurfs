@@ -183,20 +183,13 @@ function callSendAPI(messageData) {
   });
 }
 
-<<<<<<< HEAD
-=======
-
->>>>>>> test_meteo
 module.exports = {
   authenticate: authenticate,
   receivedMessage: receivedMessage,
   sendTextMessage: sendTextMessage,
-<<<<<<< HEAD
   sendWebMessage: sendWebMessage,
-=======
   sendGreetingMessage : sendGreetingMessage,
   sendTyping: sendTyping,
->>>>>>> test_meteo
   sendQuickReply: sendQuickReply,
   sendCarouselReply: sendCarouselReply,
   sendGenericMessage: sendGenericMessage
