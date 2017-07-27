@@ -23,17 +23,14 @@ function getGeolocalisation(cityName) {
   });
 }
 
-
-
-function getWeatherForecast(lat, lng) {
+function getWeatherForecast(address) {
   console.log(" Entering weatherforecast");
   console.log(lat + ' ' + lng);
   return request({
     uri: 'http://api.openweathermap.org/data/2.5/forecast/daily',
     qs: {
       APPID: WEATHER_API_TOKEN,
-      lat: lat,
-      lon: lng,
+      address : address,
       cnt: 10
     },
     method: 'GET'

@@ -3,7 +3,7 @@ var authenticate = chatService.authenticate;
 var sendTextMessage = chatService.sendTextMessage;
 var weatherService = require('../server/weatherService.js');
 var getGeolocalisation = weatherService.getGeolocalisation;
-var getFullWeather = weatherService.getFullWeather;
+var getWeatherForecast = weatherService.getWeatherForecast;
 var express = require('express');
 var router = express.Router();
 
@@ -60,10 +60,11 @@ function receivedMessage(event) {
 
   if (event.message) {
     console.log(event.message.text);
-    console.log(JSON.stringify(getGeolocalisation("Lille")));
-    console.log(getFullWeather(event.message.text));
+    res = getWeatherForecast("Lille");
+    console.log(JSON.stringify(res));
+    console.log(getWeatherForecast(event.message.text));
     sendTextMessage(senderID, event.message.text);
-    sendTextMessage(senderID, getFullWeather(event.message.text));
+    sendTextMessage(senderID, getWeatherForecast(event.message.text));
     //var fullWeather = getFullWeather(event.message);
     //sendTextMessage(senderID, fullWeather.text);
   }
