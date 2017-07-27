@@ -18,14 +18,14 @@ const WEATHER_API_TOKEN = (process.env.WEATHER_API_TOKEN) ?
 
 function getGeolocalisation(cityName, res) {
   console.log("asking googlemaps");
-  return res(request({
+  request({
     uri: 'https://maps.googleapis.com/maps/api/geocode/json',
     qs: {
       key: GOOGLE_API_TOKEN,
       address: cityName
     },
     method: 'GET'
-  }));
+  }).then(function(result) {res(result)});
 }
 
 function getWeatherForecast(address, recipientID) {
