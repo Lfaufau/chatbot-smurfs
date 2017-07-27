@@ -133,7 +133,7 @@ function callSendAPI(messageData) {
       console.error(error);
     }
   });
-}²
+}
 
 module.exports = {
   authenticate: authenticate,
