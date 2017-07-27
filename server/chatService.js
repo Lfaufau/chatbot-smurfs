@@ -139,7 +139,7 @@ module.exports = {
   authenticate: authenticate,
   receivedMessage: receivedMessage,
   sendTextMessage: sendTextMessage,
-  sendWebMessage: sendWebMessage
+  sendWebMessage: sendWebMessage,
   sendQuickReply: sendQuickReply,
   sendCarouselReply: sendCarouselReply,
   sendGenericMessage: sendGenericMessage
