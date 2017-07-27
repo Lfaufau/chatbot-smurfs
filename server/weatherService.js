@@ -36,10 +36,10 @@ function getWeatherForecast(lat, lng) {
 }
 
 function getFullWeather(cityName) {
-  Console.log(cityName.text);
-  Console.log(cityName);
+  console.log(cityName.text);
+  console.log(cityName);
   res = getGeolocalisation(cityName.text);
-  Console.log(res);
+  console.log(res);
   return getWeatherForecast(res.geometry.location.lat, res.geometry.location.lng);
 }
 
