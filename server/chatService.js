@@ -193,7 +193,10 @@ function sendCarouselReply(recipientId, textMessage, ButtonTitle, ButtonLink, ci
       api_key: FLICKR_TOKEN,
       text   : cityName,
       format : "json",
-      sort  : "relevance"
+      nojsoncallback : 1,
+      sort  : "relevance",
+      per_page : 12,
+      safe_search : 1
     },
     method: 'GET'
   }).then(function(result) {
