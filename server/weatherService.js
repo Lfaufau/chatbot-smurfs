@@ -79,6 +79,23 @@ function getWeatherPrecipitation(address, future, recipientID) {
   });
 }
 
+function getWeatherVent(address, recipientID) {
+  console.log(" Entering weatherforecast with address : " + address);
+  request({
+    uri: 'http://api.openweathermap.org/data/2.5/forecast/daily',
+    qs: {
+      APPID: WEATHER_API_TOKEN,
+      q : address,
+      cnt: 10,
+      units : "metric"
+    },
+    method: 'GET'
+  }).then(function(res) {
+    result = JSON.parse(res);
+    sendButtonReply(recipientID, "La vitesse des vents est de " + result.list[0].wind.speed + "km/h" + result.city.name + " aujourd'hui ", "Yahoo météo", getLinkYahoo(result.city.name));
+  });
+}
+
 module.exports =  {
   getGeolocalisation: getGeolocalisation,
   getWeatherForecast: getWeatherForecast,
