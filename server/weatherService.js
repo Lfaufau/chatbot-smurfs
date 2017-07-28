@@ -82,8 +82,8 @@ function getWeatherPrecipitation(address, future, recipientID) {
     method: 'GET'
   }).then(function(res) {
     result = JSON.parse(res);
-    sendButtonText(recipientID, "Météo: ",
-      result.list[future].humidity + " " + result.city.name,
+    sendButtonText(recipientID, "La probabilité qu'il pleuve",
+      result.list[future].humidity + "% à " + result.city.name,
       "Yahoo météo", getLinkYahoo(result.city.name), future);
   });
 }

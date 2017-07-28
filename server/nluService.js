@@ -28,7 +28,7 @@ function ask_Wit(req, senderID)
 
     var number = 0;
     if (entities.number) {
-       number = entities.number[0].value + 1;
+       number = entities.number[0].value;
     }
     else if (entities.demain) {
        number = find_future(entities.demain[0].value);
