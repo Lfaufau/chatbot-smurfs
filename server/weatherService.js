@@ -27,6 +27,28 @@ function getGeolocalisation(cityName, res) {
   }).then(function(result) {res(result)});
 }
 
+function sendButtonText(senderID, prefix, text, buttonText, link, future)
+{
+  var day = "aujourd'hui";
+  var finalText = prefix + " est de " + text + " aujourd'hui ";
+
+  if (future > 0) {
+    finalText = prefix + " sera de " + text;
+
+    if (future == 1){
+      day = " demain ";
+    }
+    else if (future == 2){
+      day = " après-demain ";
+    }
+    else if (future == 7){
+      day = " la semaine prochaine"
+    }
+  }
+  finalText = finalText + day;
+  sendButtonReply(recipientID, finalText, "Yahoo météo", getLinkYahoo(result.city.name));
+}
+
 function getWeatherForecast(address, future, recipientID) {
   console.log(" Entering weatherforecast with address : " + address);
   request({
@@ -41,25 +63,11 @@ function getWeatherForecast(address, future, recipientID) {
   }).then(function(res) {
 
     result = JSON.parse(res);
-    var day = "";
-    var text = "Il fait " + result.list[future].temp.day + "°C à "+ result.city.name + " aujourd'hui ";
-
-    if (future > 0) {
-      text = "Il fera " + result.list[future].temp.day + "°C à "+ result.city.name;
-
-      if (future == 1){
-        day = " demain ";
-      }
-      else if (future == 2){
-        day = " après-demain ";
-      }
-      else if (future == 7){
-        day = " la semaine prochaine"
-      }
-    }
-    sendButtonReply(recipientID, text, "Yahoo météo", getLinkYahoo(result.city.name));
+    var text =  ;
+    sendButtonText(recipientID, "La température",
+      result.list[future].temp.day + "°C à "+ result.city.name,
+      "Yahoo météo", getLinkYahoo(result.city.name), future);
   });
-
 }
 
 function getWeatherPrecipitation(address, future, recipientID) {
@@ -75,7 +83,9 @@ function getWeatherPrecipitation(address, future, recipientID) {
     method: 'GET'
   }).then(function(res) {
     result = JSON.parse(res);
-    sendButtonReply(recipientID, "La précipitation est de " + result.list[future].temp.humidity + "%" + result.city.name + " aujourd'hui ", "Yahoo météo", getLinkYahoo(result.city.name));
+    sendButtonText(recipientID, "La précipitation",
+      result.list[future].temp.humidity + "%" + result.city.name,
+      "Yahoo météo", getLinkYahoo(result.city.name), future);
   });
 }
 
@@ -92,7 +102,9 @@ function getWeatherVent(address, future, recipientID) {
     method: 'GET'
   }).then(function(res) {
     result = JSON.parse(res);
-    sendButtonReply(recipientID, "La vitesse des vents est de " + result.list[future].wind.speed + "km/h" + result.city.name + " aujourd'hui ", "Yahoo météo", getLinkYahoo(result.city.name));
+    sendButtonText(recipientID, "La force du vent ",
+      result.list[future].wind.speed + "km/h" + result.city.name,
+      "Yahoo météo", getLinkYahoo(result.city.name), future);
   });
 }
 
