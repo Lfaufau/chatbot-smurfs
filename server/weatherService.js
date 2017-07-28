@@ -85,7 +85,7 @@ function getWeatherPrecipitation(address, future, recipientID) {
     console.log(result.list[future].humidity);
     console.log(result.list[future].rain);
     sendButtonText(recipientID, "La précipitation",
-      result.list[future].rain + " % à " + result.city.name,
+      result.list[future].rain.value + " % à " + result.city.name,
       "Yahoo météo", getLinkYahoo(result.city.name), future);
   });
 }
