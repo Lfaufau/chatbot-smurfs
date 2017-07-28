@@ -186,7 +186,7 @@ function getImage(cityname, result) {
 
 function sendCarouselReply(recipientId, textMessage, ButtonTitle, ButtonLink, cityName) {
   console.log("asking flickr");
-  request({
+  requestion({
     uri: 'https://api.flickr.com/services/rest',
     qs: {
       method : "flickr.photos.search",
