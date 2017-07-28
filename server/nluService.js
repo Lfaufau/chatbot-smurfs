@@ -14,7 +14,7 @@ function ask_Wit(req)
 {
   requestion('https://api.wit.ai/message?v=27/07/2017&q=' + req, {
     'auth' : {
-      'bearer' : WIT_TOKEN}
+      'bearer' : WIT}
     }).then(function(result) {
     console.log(JSON.stringify(result));
   }).catch(function(err) {
