@@ -45,7 +45,7 @@ function sendButtonText(senderID, prefix, text, buttonText, link, future)
       day = " la semaine prochaine"
     }
     else {
-      day = "dans " + future + " jours"
+      day = " dans " + future + " jours"
     }
   }
   finalText = finalText + day;
