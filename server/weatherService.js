@@ -29,8 +29,8 @@ function getGeolocalisation(cityName, res) {
 
 function sendButtonText(senderID, prefix, text, buttonText, link, future)
 {
-  var day = "aujourd'hui";
-  var finalText = prefix + " est de " + text + " aujourd'hui ";
+  var day = " aujourd'hui ";
+  var finalText = prefix + " est de " + text;
 
   if (future > 0) {
     finalText = prefix + " sera de " + text;
@@ -83,7 +83,7 @@ function getWeatherPrecipitation(address, future, recipientID) {
   }).then(function(res) {
     result = JSON.parse(res);
     sendButtonText(recipientID, "La précipitation",
-      result.list[future].rain + "%" + result.city.name,
+      result.list[future].rain + "% à " + result.city.name,
       "Yahoo météo", getLinkYahoo(result.city.name), future);
   });
 }
@@ -102,7 +102,7 @@ function getWeatherVent(address, future, recipientID) {
   }).then(function(res) {
     result = JSON.parse(res);
     sendButtonText(recipientID, "La force du vent ",
-      result.list[future].speed + "km/h" + result.city.name,
+      result.list[future].speed + "km/h à " + result.city.name,
       "Yahoo météo", getLinkYahoo(result.city.name), future);
   });
 }
