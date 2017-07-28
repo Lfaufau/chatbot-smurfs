@@ -59,7 +59,7 @@ function getWeatherForecast(address, future, recipientID) {
     qs: {
       APPID: WEATHER_API_TOKEN,
       q : address,
-      cnt: future,
+      cnt: future + 1,
       units : "metric"
     },
     method: 'GET'
@@ -79,7 +79,7 @@ function getWeatherPrecipitation(address, future, recipientID) {
     qs: {
       APPID: WEATHER_API_TOKEN,
       q : address,
-      cnt: future,
+      cnt: future + 1,
       units : "metric"
     },
     method: 'GET'
@@ -98,7 +98,7 @@ function getWeatherVent(address, future, recipientID) {
     qs: {
       APPID: WEATHER_API_TOKEN,
       q : address,
-      cnt: future,
+      cnt: future + 1,
       units : "metric"
     },
     method: 'GET'
