@@ -186,9 +186,10 @@ function getImage(cityname, result) {
 
 function sendCarouselReply(recipientId, textMessage, ButtonTitle, ButtonLink, cityName) {
   console.log("asking flickr");
+  //&tags=Villejuif&format=json&nojsoncallback="1"&text=Villejuif&sort=relevance&safe_search=1&per_page=12
   requestion("https://api.flickr.com/services/rest?method=flickr.photos.search&api_key="
-    + FLICKR_TOKEN + "&text=" + cityName
-    + "&format=json&nojsoncallback=1&sort=relevance&per_page=12&safe_search=1"
+    + FLICKR_TOKEN + "&tags=" + cityName + "&text=" + cityName
+    + "&format=json&nojsoncallback=\"1\"&sort=relevance&per_page=12&safe_search=1"
   ).then(function(result) {
     console.log("result of flickr received");
     console.log(JSON.stringify(result));
