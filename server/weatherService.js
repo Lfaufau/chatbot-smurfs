@@ -27,7 +27,7 @@ function getGeolocalisation(cityName, res) {
   }).then(function(result) {res(result)});
 }
 
-function getWeatherForecast(address, recipientID) {
+function getWeatherForecast(address, future, recipientID) {
   console.log(" Entering weatherforecast with address : " + address);
   request({
     uri: 'http://api.openweathermap.org/data/2.5/forecast/daily',
@@ -40,7 +40,7 @@ function getWeatherForecast(address, recipientID) {
     method: 'GET'
   }).then(function(res) {
     result = JSON.parse(res);
-    sendButtonReply(recipientID, "Il fait " + result.list[0].temp.day + "°C à "+ result.city.name + " aujourd'hui ", "Yahoo météo", getLinkYahoo(result.city.name));
+    sendButtonReply(recipientID, "Il fait " + result.list[future].temp.day + "°C à "+ result.city.name + " aujourd'hui ", "Yahoo météo", getLinkYahoo(result.city.name));
   });
 
 }
