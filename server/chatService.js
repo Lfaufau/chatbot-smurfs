@@ -203,7 +203,7 @@ function sendCarouselReply(recipientId, textMessage, ButtonTitle, ButtonLink, ph
             title:textMessage,
             image_url:"https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=photo_reference&key=GOOGLE_API_TOKEN"
             },
-            "buttons":[
+            buttons:[
               {
                 type:"web_url",
                 url:ButtonLink,
