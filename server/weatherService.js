@@ -62,7 +62,7 @@ function getWeatherForecast(address, future, recipientID) {
 
 }
 
-function getWeatherPrecipitation(address, future, recipientID) {
+function getWeatherPrecipitation(address, recipientID) {
   console.log(" Entering weatherforecast with address : " + address);
   request({
     uri: 'http://api.openweathermap.org/data/2.5/forecast/daily',
@@ -75,24 +75,7 @@ function getWeatherPrecipitation(address, future, recipientID) {
     method: 'GET'
   }).then(function(res) {
     result = JSON.parse(res);
-    sendButtonReply(recipientID, "La précipitation est de " + result.list[future].temp.humidity + "%" + result.city.name + " aujourd'hui ", "Yahoo météo", getLinkYahoo(result.city.name));
-  });
-}
-
-function getWeatherVent(address, future, recipientID) {
-  console.log(" Entering weatherforecast with address : " + address);
-  request({
-    uri: 'http://api.openweathermap.org/data/2.5/forecast/daily',
-    qs: {
-      APPID: WEATHER_API_TOKEN,
-      q : address,
-      cnt: 10,
-      units : "metric"
-    },
-    method: 'GET'
-  }).then(function(res) {
-    result = JSON.parse(res);
-    sendButtonReply(recipientID, "La vitesse des vents est de " + result.list[future].wind.speed + "km/h" + result.city.name + " aujourd'hui ", "Yahoo météo", getLinkYahoo(result.city.name));
+    sendButtonReply(recipientID, "La précipitation est de " + result.list[0].rain + " %" + result.city.name + " aujourd'hui ", "Yahoo météo", getLinkYahoo(result.city.name));
   });
 }
 
@@ -109,7 +92,7 @@ function getWeatherVent(address, recipientID) {
     method: 'GET'
   }).then(function(res) {
     result = JSON.parse(res);
-    sendButtonReply(recipientID, "La vitesse des vents est de " + result.list[0].wind.speed + "km/h" + result.city.name + " aujourd'hui ", "Yahoo météo", getLinkYahoo(result.city.name));
+    sendButtonReply(recipientID, "La vitesse des vents est de " + result.list[0].speed + " km/h " + result.city.name + " aujourd'hui ", "Yahoo météo", getLinkYahoo(result.city.name));
   });
 }
 
