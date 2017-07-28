@@ -88,6 +88,22 @@ function sendGreetingMessage(recipientId) {
       text: "Bonjour " + userName
     }
   };
+  callSendAPI(messageData);
+}
+
+function getLinkYahoo(cityName) {
+  return "https://fr.search.yahoo.com/search?p=\"" + cityName + "\"+m%C3%A9t%C3%A9o";
+}
+
+function sendWebMessage(recipientId, cityName) {
+  var messageData = {
+    recipient: {
+      id: recipientId
+    },
+    message: {
+        text: "https://fr.search.yahoo.com/search?p=\"" + cityName + "\"+m%C3%A9t%C3%A9o"
+    }
+  };
 
   callSendAPI(messageData);
 }
@@ -125,6 +141,32 @@ function sendQuickReply(recipientId, message,  quick_replies) {
     }
   };
 
+  callSendAPI(messageData);
+}
+
+function sendButtonReply(recipientId, textMessage, ButtonTitle, ButtonLink)
+{
+  var messageData = {
+    recipient: {
+      id: recipientId
+    },
+    message: {
+      attachment: {
+        type:"template",
+        payload: {
+          template_type:"button",
+          text:textMessage,
+          buttons:[
+            {
+              type:"web_url",
+              url:ButtonLink,
+              title: ButtonTitle
+            }
+          ]
+        }
+      }
+    }
+  };
   callSendAPI(messageData);
 }
 
@@ -169,11 +211,13 @@ function callSendAPI(messageData) {
   });
 }
 
-
 module.exports = {
   authenticate: authenticate,
   receivedMessage: receivedMessage,
   sendTextMessage: sendTextMessage,
+  sendWebMessage: sendWebMessage,
+  sendButtonReply: sendButtonReply,
+  getLinkYahoo: getLinkYahoo,
   sendGreetingMessage : sendGreetingMessage,
   sendTyping: sendTyping,
   sendQuickReply: sendQuickReply,

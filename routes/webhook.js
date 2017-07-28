@@ -2,9 +2,14 @@ var chatService     = require('../server/chatService');
 var nluService      = require('../server/nluService');
 var authenticate    = chatService.authenticate;
 var sendTextMessage = chatService.sendTextMessage;
+
 var sendGreeting    = chatService.sendGreetingMessage;
-var express         = require('express');
-var router          = express.Router();
+var weatherService = require('../server/weatherService.js');
+var getGeolocalisation = weatherService.getGeolocalisation;
+var getWeatherForecast = weatherService.getWeatherForecast;
+var sendWebMessage = chatService.sendWebMessage;
+var express = require('express');
+var router = express.Router();
 
 /* GET hello world page. */
 router.get('/', function(req, res, next) {
@@ -57,15 +62,24 @@ function receivedMessage(event) {
   var messageText = message.text;
   var messageAttachments = message.attachments;
 
-  if (event.message) {
+  getGeolocalisation(messageText, function(res) {
+    console.log(JSON.stringify(res));
     nluService.ask_Wit(messageText);
-    if (messageText.indexOf("Bonjour") > -1) {
-        sendGreeting(senderID);
+    if (event.message) {
+      if (messageText.toUpperCase().indexOf("BONJOUR") > -1 || messageText.toUpperCase().indexOf("SALUT") > -1) {
+          console.log("Hey!");
+          sendGreeting(senderID);
+      }
+      else if (JSON.parse(res).status.indexOf("OK") > -1){
+        console.log("OK, that's a city!");
+        getWeatherForecast(event.message.text, senderID);
+      }
+      else {
+        console.log("not a city...");
+        sendTextMessage(senderID, "Je n'ai pas compris");
+      }
     }
-    else {
-      sendTextMessage(senderID, event.message.text);
-    }
-  }
+  });
 }
 
 module.exports = router;
