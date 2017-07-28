@@ -3,6 +3,9 @@ const
   request = require('request');
 
 var requestion = require('request-promise');
+
+var chatService     = require('../server/chatService');
+var weatherService = require('../server/weatherService.js');
 var getWeatherForecast = weatherService.getWeatherForecast;
 var sendTextMessage = chatService.sendTextMessage;
 var sendGreeting    = chatService.sendGreetingMessage;
