@@ -85,11 +85,11 @@ function find_future(str)
   {
     return 1;
   }
-  else if (str.indexOf("après-demain"))
+  else if (str.indexOf("après-demain") > -1)
   {
     return 2;
   }
-  else if (str.indexOf("la semaine prochaine"))
+  else if (str.indexOf("la semaine prochaine") > -1)
   {
     return 7;
   }
