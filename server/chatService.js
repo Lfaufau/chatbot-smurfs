@@ -193,7 +193,7 @@ function sendCarouselReply(recipientId, textMessage, ButtonTitle, ButtonLink, ci
     console.log("result of flickr received");
     console.log(JSON.stringify(result));
     var photo = JSON.parse(result).photos.photo[0];
-    console.log("photo[0] : " JSON.stringify(photo));
+    console.log("photo[0] : " + JSON.stringify(photo));
     var imageLink = "https://farm" + photo.farm + ".staticflickr.com/" + photo.server + "/" + photo.id + "_" + photo.secret + ".jpg";
     /*var messageData = {
       recipient: {
