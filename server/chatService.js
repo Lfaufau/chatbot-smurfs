@@ -194,13 +194,14 @@ function sendCarouselReply(recipientId, textMessage, ButtonTitle, ButtonLink, ci
       tags   : cityName,
       text   : cityName,
       format : "json",
-      nojsoncallback : 1
+      nojsoncallback : 1,
+      sort  : relevance
     },
     method: 'GET'
   }).then(function(result) {
     console.log("result of flickr received");
     console.log(JSON.stringify(result));
-    var photo = JSON.parse(result).photo[0];
+    var photo = JSON.parse(result).photos.photo[0];
     var imageLink = result("https://farm" + photo.farm + ".staticflickr.com/" + photo.server + "/" + photo.id + "_" + photo.secret + ".jpg");
     /*var messageData = {
       recipient: {
