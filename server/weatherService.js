@@ -63,7 +63,6 @@ function getWeatherForecast(address, future, recipientID) {
   }).then(function(res) {
 
     result = JSON.parse(res);
-    var text =  ;
     sendButtonText(recipientID, "La température",
       result.list[future].temp.day + "°C à "+ result.city.name,
       "Yahoo météo", getLinkYahoo(result.city.name), future);
