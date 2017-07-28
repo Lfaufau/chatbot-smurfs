@@ -189,11 +189,11 @@ function sendCarouselReply(recipientId, textMessage, ButtonTitle, ButtonLink, ci
   request({
     uri: 'https://api.flickr.com/services/rest',
     qs: {
-      method : flickr.photos.search,
+      method : "flickr.photos.search",
       api_key: FLICKR_TOKEN,
       tags   : cityName,
       text   : cityName,
-      format : json,
+      format : "json",
       nojsoncallback : 1
     },
     method: 'GET'
