@@ -12,9 +12,10 @@ const WIT = (process.env.WIT_TOKEN) ?
 
 function ask_Wit(req)
 {
-  requestion('https://api.wit.ai/message?v=27/07/2017&q=' + req,
-    auth : {
-      bearer : WIT_TOKEN}).then(function(result) {
+  requestion('https://api.wit.ai/message?v=27/07/2017&q=' + req, {
+    'auth' : {
+      'bearer' : WIT_TOKEN}
+    }).then(function(result) {
     console.log(JSON.stringify(result));
   }).catch(function(err) {
     console.error("WIT API error: ", err);
