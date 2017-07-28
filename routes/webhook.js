@@ -29,6 +29,7 @@ router.post('/', function (req, res) {
       entry.messaging.forEach(function(event) {
         var senderId = event.sender.id;
         if (event.message) {
+          console.log("1. recevied post");
           receivedMessage(event);
         } else {
           console.log("Webhook received unknown event: ", event);
@@ -59,6 +60,7 @@ function receivedMessage(event) {
   var messageText = message.text;
   var messageAttachments = message.attachments;
 
+  console.log("2. let's ask wit");
   nluService.ask_Wit(messageText, senderID);
 }
 

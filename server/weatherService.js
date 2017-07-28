@@ -50,7 +50,7 @@ function sendButtonText(senderID, prefix, text, buttonText, link, future)
 }
 
 function getWeatherForecast(address, future, recipientID) {
-  console.log(" Entering weatherforecast with address : " + address);
+  console.log("8. Entering weatherforecast with address : " + address +"Let's ask openweather");
   request({
     uri: 'http://api.openweathermap.org/data/2.5/forecast/daily',
     qs: {
@@ -61,7 +61,7 @@ function getWeatherForecast(address, future, recipientID) {
     },
     method: 'GET'
   }).then(function(res) {
-
+    console.log("9. Got a result:");
     result = JSON.parse(res);
     sendButtonText(recipientID, "La température",
       result.list[future].temp.day + "°C à "+ result.city.name,
@@ -70,7 +70,7 @@ function getWeatherForecast(address, future, recipientID) {
 }
 
 function getWeatherPrecipitation(address, future, recipientID) {
-  console.log(" Entering precipitation with address : " + address);
+  console.log(" 8. Entering precipitation with address : " + address);
   request({
     uri: 'http://api.openweathermap.org/data/2.5/forecast/daily',
     qs: {
@@ -89,7 +89,7 @@ function getWeatherPrecipitation(address, future, recipientID) {
 }
 
 function getWeatherVent(address, future, recipientID) {
-  console.log(" Entering wind with address : " + address);
+  console.log("8. Entering wind with address : " + address);
   request({
     uri: 'http://api.openweathermap.org/data/2.5/forecast/daily',
     qs: {

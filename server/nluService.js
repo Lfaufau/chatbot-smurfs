@@ -21,12 +21,14 @@ function ask_Wit(req, senderID)
     'auth' : {
       'bearer' : WIT}
   }).then(function(result) {
+    console.log("3. received answer from wit");
     console.log(JSON.stringify(result));
     chatService.sendTyping(senderID);
 
     var entities = JSON.parse(result).entities;
 
     var number = 0;
+    console.log("4. computing the number of days");
     if (entities.number) {
        number = entities.number[0].value;
     }
@@ -34,33 +36,42 @@ function ask_Wit(req, senderID)
        number = find_future(entities.demain[0].value);
     }
 
+    console.log("5. result : " + number + " Let's compute location value");
     var location = "";
     if (entities.location) {
       location = entities.location[0].value;
     }
 
+    console.log("6. result :"+ location + "now intent");
+
     if (entities.intent_meteo) {
       var meteo = entities.intent_meteo[0].value;
       if (location == "") {
+        console.log("7. missing the city name");
         sendTextMessage(senderID, "Veuillez préciser une ville s'il vous plait");
       }
       else if (meteo.indexOf("temperature") > -1 || meteo.indexOf("meteo") > -1)
       {
+        console.log("7. Got meteo or temperature intent");
         weatherService.getWeatherForecast(location, number, senderID);
       }
       else if (meteo.indexOf("précipitation") > -1)
       {
+        console.log("7. Got rain intent");
         weatherService.getWeatherPrecipitation(location, number, senderID);
       }
       else if (meteo.indexOf("Vent") > -1)
       {
+        console.log("7. Got wind intent");
         weatherService.getWeatherVent(location, number, senderID);
       }
     }
     else if (entities.intent_greeting) {
+      console.log("7. Got greeting intent");
       sendGreeting(senderID);
     }
     else {
+      console.log("7. Got something else");
       sendTextMessage(senderID, "Je n'ai pas compris...");
     }
   }).catch(function(err) {
