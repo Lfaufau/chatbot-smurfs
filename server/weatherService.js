@@ -44,6 +44,9 @@ function sendButtonText(senderID, prefix, text, buttonText, link, future)
     else if (future == 7){
       day = " la semaine prochaine"
     }
+    else {
+      day = "dans " + future + " jours"
+    }
   }
   finalText = finalText + day;
   sendButtonReply(senderID, finalText, "Yahoo météo", getLinkYahoo(result.city.name));
@@ -56,7 +59,7 @@ function getWeatherForecast(address, future, recipientID) {
     qs: {
       APPID: WEATHER_API_TOKEN,
       q : address,
-      cnt: 10,
+      cnt: future,
       units : "metric"
     },
     method: 'GET'
@@ -76,7 +79,7 @@ function getWeatherPrecipitation(address, future, recipientID) {
     qs: {
       APPID: WEATHER_API_TOKEN,
       q : address,
-      cnt: 10,
+      cnt: future,
       units : "metric"
     },
     method: 'GET'
@@ -95,7 +98,7 @@ function getWeatherVent(address, future, recipientID) {
     qs: {
       APPID: WEATHER_API_TOKEN,
       q : address,
-      cnt: 10,
+      cnt: future,
       units : "metric"
     },
     method: 'GET'
