@@ -7,6 +7,7 @@ var requestion = require('request-promise');
 var chatService         = require('../server/chatService');
 var weatherService      = require('../server/weatherService.js');
 var getWeatherForecast  = weatherService.getWeatherForecast;
+var getWeatherPrecipitation = weatherService.getWeatherPrecipitation;
 var sendTextMessage     = chatService.sendTextMessage;
 var sendGreeting        = chatService.sendGreetingMessage;
 
@@ -24,7 +25,9 @@ function ask_Wit(req, senderID)
     var entities = JSON.parse(result).entities;
 
     if (entities.intent_meteo) {
-      if (entities.location) {
+      if (entities.location && entities.location[0].value == "Précipitation") {
+        getWeatherPrecipitation(entities.location[0].value, senderID);
+      if (entities.location)
         getWeatherForecast(entities.location[0].value, senderID);
       }
     }
