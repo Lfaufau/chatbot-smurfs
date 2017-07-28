@@ -212,6 +212,7 @@ function sendCarouselReply(recipientId, textMessage, ButtonTitle, ButtonLink, ph
              }
            ]
           }
+        ]
         }
     }
   }
