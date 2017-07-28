@@ -7,7 +7,6 @@ var sendGreeting    = chatService.sendGreetingMessage;
 var weatherService = require('../server/weatherService.js');
 var getGeolocalisation = weatherService.getGeolocalisation;
 var getWeatherForecast = weatherService.getWeatherForecast;
-var sendWebMessage = chatService.sendWebMessage;
 var express = require('express');
 var router = express.Router();
 
@@ -61,10 +60,10 @@ function receivedMessage(event) {
 
   var messageText = message.text;
   var messageAttachments = message.attachments;
+  nluService.ask_Wit(messageText, senderID);
 
-  getGeolocalisation(messageText, function(res) {
+  /*getGeolocalisation(messageText, function(res) {
     console.log(JSON.stringify(res));
-    nluService.ask_Wit(messageText);
     if (event.message) {
       if (messageText.toUpperCase().indexOf("BONJOUR") > -1 || messageText.toUpperCase().indexOf("SALUT") > -1) {
           sendGreeting(senderID);
@@ -76,7 +75,7 @@ function receivedMessage(event) {
         sendTextMessage(senderID, "Je n'ai pas compris");
       }
     }
-  });
+  });*/
 }
 
 module.exports = router;
