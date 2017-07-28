@@ -195,7 +195,7 @@ function sendCarouselReply(recipientId, textMessage, ButtonTitle, ButtonLink, ci
       text   : cityName,
       format : "json",
       nojsoncallback : 1,
-      sort  : relevance
+      sort  : "relevance"
     },
     method: 'GET'
   }).then(function(result) {
