@@ -22,6 +22,8 @@ function ask_Wit(req, senderID)
       'bearer' : WIT}
   }).then(function(result) {
     console.log(JSON.stringify(result));
+    chatService.sendTyping(senderID);
+
     var entities = JSON.parse(result).entities;
 
     var number = 0;

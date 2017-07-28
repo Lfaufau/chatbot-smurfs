@@ -71,7 +71,7 @@ function getWeatherForecast(address, future, recipientID) {
 }
 
 function getWeatherPrecipitation(address, future, recipientID) {
-  console.log(" Entering weatherforecast with address : " + address);
+  console.log(" Entering precipitation with address : " + address);
   request({
     uri: 'http://api.openweathermap.org/data/2.5/forecast/daily',
     qs: {
@@ -84,13 +84,13 @@ function getWeatherPrecipitation(address, future, recipientID) {
   }).then(function(res) {
     result = JSON.parse(res);
     sendButtonText(recipientID, "La précipitation",
-      result.list[future].temp.humidity + "%" + result.city.name,
+      result.list[future].rain + "%" + result.city.name,
       "Yahoo météo", getLinkYahoo(result.city.name), future);
   });
 }
 
 function getWeatherVent(address, future, recipientID) {
-  console.log(" Entering weatherforecast with address : " + address);
+  console.log(" Entering wind with address : " + address);
   request({
     uri: 'http://api.openweathermap.org/data/2.5/forecast/daily',
     qs: {
@@ -103,7 +103,7 @@ function getWeatherVent(address, future, recipientID) {
   }).then(function(res) {
     result = JSON.parse(res);
     sendButtonText(recipientID, "La force du vent ",
-      result.list[future].wind.speed + "km/h" + result.city.name,
+      result.list[future].speed + "km/h" + result.city.name,
       "Yahoo météo", getLinkYahoo(result.city.name), future);
   });
 }
@@ -111,5 +111,6 @@ function getWeatherVent(address, future, recipientID) {
 module.exports =  {
   getGeolocalisation: getGeolocalisation,
   getWeatherForecast: getWeatherForecast,
-  getWeatherPrecipitation: getWeatherPrecipitation
+  getWeatherPrecipitation: getWeatherPrecipitation,
+  getWeatherVent : getWeatherVent
 }
