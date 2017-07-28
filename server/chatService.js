@@ -191,10 +191,8 @@ function sendCarouselReply(recipientId, textMessage, ButtonTitle, ButtonLink, ci
     qs: {
       method : "flickr.photos.search",
       api_key: FLICKR_TOKEN,
-      tags   : cityName,
       text   : cityName,
       format : "json",
-      nojsoncallback : 1,
       sort  : "relevance"
     },
     method: 'GET'
