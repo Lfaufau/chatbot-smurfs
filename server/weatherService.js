@@ -6,6 +6,8 @@ var chatService = require('../server/chatService');
 var sendTextMessage = chatService.sendTextMessage;
 var sendButtonReply = chatService.sendButtonReply;
 var getLinkYahoo = chatService.getLinkYahoo;
+var sendCarouselReply = chatService.sendCarouselReply;
+var getPhotoLocalisation = chatService.getPhotoLocalisation;
 
 // Get the config const
 const GOOGLE_API_TOKEN = (process.env.GOOGLE_API_TOKEN) ?
@@ -25,7 +27,9 @@ function getGeolocalisation(cityName, res) {
       address: cityName
     },
     method: 'GET'
-  }).then(function(result) {res(result)});
+  }).then(function(result) {
+    res(result);
+    getPhotoLocalisation(result)});
 }
 
 function getWeatherForecast(address, recipientID) {
@@ -41,7 +45,8 @@ function getWeatherForecast(address, recipientID) {
     method: 'GET'
   }).then(function(res) {
     result = JSON.parse(res);
-    sendButtonReply(recipientID, "Il fait " + result.list[0].temp.day + "°C à "+ result.city.name + " aujourd'hui ", "Yahoo météo", getLinkYahoo(result.city.name));
+    //sendButtonReply(recipientID, "Il fait " + result.list[0].temp.day + "°C à "+ result.city.name + " aujourd'hui ", "Yahoo météo", getLinkYahoo(result.city.name));
+    sendCarouselReply(recipientID, null, "Il fait " + result.list[0].temp.day + "°C à" + result.city.name + " aujourd'hui ", "Yahoo météo", getLinkYahoo(result.city.name), "CnRtAAAATLZNl354RwP_9UKbQ_5Psy40texXePv4oAlgP4qNEkdIrkyse7rPXYGd9D_Uj1rVsQdWT4oRz4QrYAJNpFX7rzqqMlZw2h2E2y5IKMUZ7ouD_SlcHxYq1yL4KbKUv3qtWgTK0A6QbGh87GB3sscrHRIQiG2RrmU_jF4tENr9wGS_YxoUSSDrYjWmrNfeEHSGSc3FyhNLlBU&");
   });
 
 }

@@ -100,6 +100,19 @@ function getLinkYahoo(cityName) {
   return "https://fr.search.yahoo.com/search?p=\"" + cityName + "\"+m%C3%A9t%C3%A9o";
 }
 
+function getPhotoLocalisation(res) {
+  console.log("asking googlemaps");
+  request({
+    uri: 'https://maps.googleapis.com/maps/api/place/nearbysearch/json',
+    qs: {
+      location: res,
+      key: GOOGLE_API_TOKEN
+    },
+    method: 'GET'
+  }).then(function(result) {
+    JSON.parse(result).photos.photo_reference(result)});
+}
+
 function sendWebMessage(recipientId, cityName) {
   var messageData = {
     recipient: {
@@ -175,7 +188,7 @@ function sendButtonReply(recipientId, textMessage, ButtonTitle, ButtonLink)
   callSendAPI(messageData);
 }
 
-function sendCarouselReply(recipientId, carousel) {
+function sendCarouselReply(recipientId, textMessage, ButtonTitle, ButtonLink, photo_reference) {
   var messageData = {
     recipient: {
       id: recipientId
@@ -185,7 +198,20 @@ function sendCarouselReply(recipientId, carousel) {
         type: "template",
         payload: {
           template_type: "generic",
-          elements: carousel
+          elements:[
+           {
+            title:textMessage,
+            image_url:"https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=photo_reference&key=GOOGLE_API_TOKEN"
+            },
+            "buttons":[
+              {
+                type:"web_url",
+                url:ButtonLink,
+                title:ButtonTitle,
+                messenger_extensions: true,
+                webview_height_ratio: "tall"
+              }
+            ]
         }
       }
     }
@@ -227,5 +253,6 @@ module.exports = {
   sendTyping: sendTyping,
   sendQuickReply: sendQuickReply,
   sendCarouselReply: sendCarouselReply,
+  getPhotoLocalisation: getPhotoLocalisation,
   sendGenericMessage: sendGenericMessage
 }
