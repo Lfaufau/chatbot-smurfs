@@ -6,6 +6,7 @@ var requestion = require('request-promise');
 
 var chatService         = require('../server/chatService');
 var weatherService      = require('../server/weatherService.js');
+var getWeatherPrecipitation = weatherService.getWeatherPrecipitation;
 var getWeatherForecast  = weatherService.getWeatherForecast;
 var sendTextMessage     = chatService.sendTextMessage;
 var sendGreeting        = chatService.sendGreetingMessage;
@@ -23,21 +24,35 @@ function ask_Wit(req, senderID)
     console.log(JSON.stringify(result));
     var entities = JSON.parse(result).entities;
 
+    var number = 0;
+    if (entities.number) {
+       number = entities.number[0].value + 1;
+    }
+    else if (entities.demain) {
+       number = find_future(entities.demain[0].value);
+    }
+
+    var location = "";
+    if (entities.location) {
+      location = entities.location[0].value;
+    }
+
     if (entities.intent_meteo) {
-      if (entities.location) {
-        if (entities.number)
-         {
-           getWeatherForecast(entities.location[0].value,
-             entities.number[0].value + 1, senderID);
-         }
-         else if (entities.demain) {
-           getWeatherForecast(entities.location[0].value,
-             find_future(entities.demain[0].value), senderID);
-         }
-         else
-         {
-           getWeatherForecast(entities.location[0].value, 0, senderID);
-         }
+      var meteo = entities.intent_meteo[0].value;
+      if (location == "") {
+        sendTextMessage(senderID, "Veuillez préciser une ville s'il vous plait");
+      }
+      else if (meteo.indexOf("temperature") > -1 || meteo.indexOf("meteo") > -1)
+      {
+        weatherService.getWeatherForecast(location, number, senderID);
+      }
+      else if (meteo.indexOf("précipitation") > -1)
+      {
+        weatherService.getWeatherPrecipitation(location, number, senderID);
+      }
+      else if (meteo.indexOf("Vent") > -1)
+      {
+        weatherService.getWeatherVent(location, number, senderID);
       }
     }
     else if (entities.intent_greeting) {
