@@ -186,24 +186,15 @@ function getImage(cityname, result) {
 
 function sendCarouselReply(recipientId, textMessage, ButtonTitle, ButtonLink, cityName) {
   console.log("asking flickr");
-  requestion({
-    uri: 'https://api.flickr.com/services/rest',
-    qs: {
-      method : "flickr.photos.search",
-      api_key: FLICKR_TOKEN,
-      text   : cityName,
-      format : "json",
-      nojsoncallback : 1,
-      sort  : "relevance",
-      per_page : 12,
-      safe_search : 1
-    },
+  requestion("https://api.flickr.com/services/rest?method=flickr.photos.search&api_key="
+    + FLICKR_TOKEN + "&text=" + cityName
+    + "&format=json&nojsoncallback=1&sort=relevance&per_page=12&safe_search=1",
     method: 'GET'
   }).then(function(result) {
     console.log("result of flickr received");
     console.log(JSON.stringify(result));
     var photo = JSON.parse(result).photos.photo[0];
-    var imageLink = result("https://farm" + photo.farm + ".staticflickr.com/" + photo.server + "/" + photo.id + "_" + photo.secret + ".jpg");
+    var imageLink = "https://farm" + photo.farm + ".staticflickr.com/" + photo.server + "/" + photo.id + "_" + photo.secret + ".jpg";
     /*var messageData = {
       recipient: {
         id: recipientId
