@@ -198,6 +198,7 @@ function sendCarouselReply(recipientId, textMessage, ButtonTitle, ButtonLink, ci
     },
     method: 'GET'
   }).then(function(result) {
+    console.log("result of flickr received");
     var photo = JSON.parse(result).photo[0];
     var imageLink = result("https://farm" + photo.farm + ".staticflickr.com/" + photo.server + "/" + photo.id + "_" + photo.secret + ".jpg");
     var messageData = {
@@ -224,7 +225,7 @@ function sendCarouselReply(recipientId, textMessage, ButtonTitle, ButtonLink, ci
         }
       }
     };
-    callSendAPI(recipientId, messageData);
+    callSendAPI(messageData);
   });
 }
 
