@@ -46,12 +46,13 @@ function getWeatherForecast(address, recipientID) {
   }).then(function(res) {
     result = JSON.parse(res);
     //sendButtonReply(recipientID, "Il fait " + result.list[0].temp.day + "°C à "+ result.city.name + " aujourd'hui ", "Yahoo météo", getLinkYahoo(result.city.name));
-    sendCarouselReply(recipientID, null, "Il fait " + result.list[0].temp.day + "°C à" + result.city.name + " aujourd'hui ", "Yahoo météo", getLinkYahoo(result.city.name), "CnRtAAAATLZNl354RwP_9UKbQ_5Psy40texXePv4oAlgP4qNEkdIrkyse7rPXYGd9D_Uj1rVsQdWT4oRz4QrYAJNpFX7rzqqMlZw2h2E2y5IKMUZ7ouD_SlcHxYq1yL4KbKUv3qtWgTK0A6QbGh87GB3sscrHRIQiG2RrmU_jF4tENr9wGS_YxoUSSDrYjWmrNfeEHSGSc3FyhNLlBU&");
+    sendCarouselReply(recipientID, null, "Il fait " + result.list[0].temp.day + "°C à" + result.city.name + " aujourd'hui ", "Yahoo météo", getLinkYahoo(result.city.name), address);
   });
 
 }
 
 module.exports =  {
   getGeolocalisation: getGeolocalisation,
-  getWeatherForecast: getWeatherForecast
+  getWeatherForecast: getWeatherForecast,
+  getImage          : getImage
 }

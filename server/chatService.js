@@ -14,6 +14,11 @@ const VALIDATION_TOKEN = (process.env.MESSENGER_VALIDATION_TOKEN) ?
   (process.env.MESSENGER_VALIDATION_TOKEN) :
   config.get('validationToken');
 
+  const FLICKR_TOKEN = (process.env.FLICKR) ?
+    (process.env.FLICKR) :
+    config.get('flickr_token');
+
+
 var userService = require('../server/userService');
 
 function addUserName(senderID, res) {
@@ -100,19 +105,6 @@ function getLinkYahoo(cityName) {
   return "https://fr.search.yahoo.com/search?p=\"" + cityName + "\"+m%C3%A9t%C3%A9o";
 }
 
-function getPhotoLocalisation(res) {
-  console.log("asking googlemaps");
-  request({
-    uri: 'https://maps.googleapis.com/maps/api/place/nearbysearch/json',
-    qs: {
-      location: res,
-      key: GOOGLE_API_TOKEN
-    },
-    method: 'GET'
-  }).then(function(result) {
-    JSON.parse(result).photos.photo_reference(result)});
-}
-
 function sendWebMessage(recipientId, cityName) {
   var messageData = {
     recipient: {
@@ -188,37 +180,52 @@ function sendButtonReply(recipientId, textMessage, ButtonTitle, ButtonLink)
   callSendAPI(messageData);
 }
 
-function sendCarouselReply(recipientId, textMessage, ButtonTitle, ButtonLink, photo_reference) {
-  var messageData = {
-    recipient: {
-      id: recipientId
-    },
-    message: {
-      attachment: {
-        type: "template",
-        payload: {
-          template_type: "generic",
-          elements:[
-           {
-             title:textMessage,
-             image_url:"https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=" + photo_reference + "&key=" + GOOGLE_API_TOKEN,
-             buttons: [
-             {
-               type:"web_url",
-               url:ButtonLink,
-               title:ButtonTitle,
-               messenger_extensions: true,
-               webview_height_ratio: "tall"
-             }
-           ]
-          }
-        ]
-        }
-    }
-  }
-  };
+function getImage(cityname, result) {
 
-  callSendAPI(messageData);
+}
+
+function sendCarouselReply(recipientId, textMessage, ButtonTitle, ButtonLink, cityName) {
+  console.log("asking flickr");
+  request({
+    uri: 'https://api.flickr.com/services/rest',
+    qs: {
+      method : flickr.photos.search,
+      api_key: FLICKR_TOKEN,
+      tags   : cityName,
+      text   : cityName,
+      format : json,
+      nojsoncallback : 1
+    },
+    method: 'GET'
+  }).then(function(result) {
+    var photo = JSON.parse(result).photo[0];
+    var imageLink = result("https://farm" + photo.farm + ".staticflickr.com/" + photo.server + "/" + photo.id + "_" + photo.secret + ".jpg");
+    var messageData = {
+      recipient: {
+        id: recipientId
+      },
+      message: {
+        attachment: {
+          type: "template",
+          payload: {
+            template_type: "generic",
+            elements:[{
+               title:textMessage,
+               image_url: image,
+               buttons: [{
+                 type:"web_url",
+                 url:ButtonLink,
+                 title:ButtonTitle,
+                 messenger_extensions: true,
+                 webview_height_ratio: "tall"
+               }]
+            }]
+          }
+        }
+      }
+    };
+    callSendAPI(recipientId, messageData);
+  });
 }
 
 function callSendAPI(messageData) {
