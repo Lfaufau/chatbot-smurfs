@@ -8,10 +8,9 @@ var requestion = require('request-promise');
 const WIT = (process.env.WIT_TOKEN) ?
   (process.env.WIT_TOKEN) : config.get('wit-token');
 
-
-
 function ask_Wit(req)
 {
+  
   requestion('https://api.wit.ai/message?v=27/07/2017&q=' + req, {
     'auth' : {
       'bearer' : WIT}

@@ -16,7 +16,7 @@ const VALIDATION_TOKEN = (process.env.MESSENGER_VALIDATION_TOKEN) ?
 
 var userService = require('../server/userService');
 
-function addUserName(senderID) {
+function addUserName(senderID, res) {
   var senderName = null;
   requestion(
     'https://graph.facebook.com/v2.6/' + senderID +
@@ -25,6 +25,7 @@ function addUserName(senderID) {
   ).then(function(result) {
     senderName = JSON.parse(result).first_name;
     userService.addUser(senderID, senderName);
+    res(senderName);
   }).catch(function(err) {
     console.error("Facebook API error: ", err);
   });
@@ -74,12 +75,16 @@ function sendTextMessage(recipientId, messageText) {
 }
 
 function sendGreetingMessage(recipientId) {
-  if (!userService.isUserKnown(recipientId))
-  {
+  var userName = "";
+  if (!userService.isUserKnown(recipientId)) {
     sendTyping(recipientId);
-    addUserName(recipientId);
+    addUserName(recipientId, function(res) {
+      userName = res;
+    });
   }
-  var userName = userService.getUser(recipientId);
+  else {
+    userName = userService.getUser(recipientId);
+  }
   var messageData = {
     recipient: {
       id: recipientId
