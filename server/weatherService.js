@@ -46,7 +46,7 @@ function sendButtonText(senderID, prefix, text, buttonText, link, future)
     }
   }
   finalText = finalText + day;
-  sendButtonReply(recipientID, finalText, "Yahoo météo", getLinkYahoo(result.city.name));
+  sendButtonReply(senderID, finalText, "Yahoo météo", getLinkYahoo(result.city.name));
 }
 
 function getWeatherForecast(address, future, recipientID) {
