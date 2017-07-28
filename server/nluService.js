@@ -7,7 +7,6 @@ var requestion = require('request-promise');
 var chatService         = require('../server/chatService');
 var weatherService      = require('../server/weatherService.js');
 var getWeatherForecast  = weatherService.getWeatherForecast;
-var getWeatherPrecipitation = weatherService.getWeatherPrecipitation;
 var sendTextMessage     = chatService.sendTextMessage;
 var sendGreeting        = chatService.sendGreetingMessage;
 
@@ -25,10 +24,20 @@ function ask_Wit(req, senderID)
     var entities = JSON.parse(result).entities;
 
     if (entities.intent_meteo) {
-      if (entities.location && entities.location[0].value == "Précipitation") {
-        getWeatherPrecipitation(entities.location[0].value, senderID);
-      if (entities.location)
-        getWeatherForecast(entities.location[0].value, senderID);
+      if (entities.location) {
+        if (entities.number)
+         {
+           getWeatherForecast(entities.location[0].value,
+             entities.number[0].value + 1, senderID);
+         }
+         else if (entities.demain) {
+           getWeatherForecast(entities.location[0].value,
+             find_future(entities.demain[0].value), senderID);
+         }
+         else
+         {
+           getWeatherForecast(entities.location[0].value, 0, senderID);
+         }
       }
     }
     else if (entities.intent_greeting) {
@@ -40,6 +49,22 @@ function ask_Wit(req, senderID)
   }).catch(function(err) {
     console.error("WIT API error: ", err);
   });
+}
+
+function find_future(str)
+{
+  if (str.indexOf("demain") > -1)
+  {
+    return 1;
+  }
+  else if (str.indexOf("après-demain"))
+  {
+    return 2;
+  }
+  else if (str.indexOf("la semaine prochaine"))
+  {
+    return 7;
+  }
 }
 
 module.exports = {
