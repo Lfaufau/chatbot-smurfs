@@ -3,12 +3,12 @@ var nluService      = require('../server/nluService');
 var authenticate    = chatService.authenticate;
 var sendTextMessage = chatService.sendTextMessage;
 
-var sendGreeting    = chatService.sendGreetingMessage;
-var weatherService = require('../server/weatherService.js');
-var getGeolocalisation = weatherService.getGeolocalisation;
-var getWeatherForecast = weatherService.getWeatherForecast;
-var express = require('express');
-var router = express.Router();
+var sendGreeting        = chatService.sendGreetingMessage;
+var weatherService      = require('../server/weatherService.js');
+var getGeolocalisation  = weatherService.getGeolocalisation;
+var getWeatherForecast  = weatherService.getWeatherForecast;
+var express             = require('express');
+var router              = express.Router();
 
 /* GET hello world page. */
 router.get('/', function(req, res, next) {
@@ -56,26 +56,10 @@ function receivedMessage(event) {
     senderID, recipientID, timeOfMessage);
   console.log(JSON.stringify(message));
 
-  var messageId = message.mid;
-
   var messageText = message.text;
   var messageAttachments = message.attachments;
-  nluService.ask_Wit(messageText, senderID);
 
-  /*getGeolocalisation(messageText, function(res) {
-    console.log(JSON.stringify(res));
-    if (event.message) {
-      if (messageText.toUpperCase().indexOf("BONJOUR") > -1 || messageText.toUpperCase().indexOf("SALUT") > -1) {
-          sendGreeting(senderID);
-      }
-      else if (JSON.parse(res).status.indexOf("OK") > -1){
-        getWeatherForecast(event.message.text, senderID);
-      }
-      else {
-        sendTextMessage(senderID, "Je n'ai pas compris");
-      }
-    }
-  });*/
+  nluService.ask_Wit(messageText, senderID);
 }
 
 module.exports = router;

@@ -4,11 +4,11 @@ const
 
 var requestion = require('request-promise');
 
-var chatService     = require('../server/chatService');
-var weatherService = require('../server/weatherService.js');
-var getWeatherForecast = weatherService.getWeatherForecast;
-var sendTextMessage = chatService.sendTextMessage;
-var sendGreeting    = chatService.sendGreetingMessage;
+var chatService         = require('../server/chatService');
+var weatherService      = require('../server/weatherService.js');
+var getWeatherForecast  = weatherService.getWeatherForecast;
+var sendTextMessage     = chatService.sendTextMessage;
+var sendGreeting        = chatService.sendGreetingMessage;
 
 // Get the config const
 const WIT = (process.env.WIT_TOKEN) ?
@@ -19,7 +19,7 @@ function ask_Wit(req, senderID)
   requestion('https://api.wit.ai/message?v=27/07/2017&q=' + encodeURIComponent(req), {
     'auth' : {
       'bearer' : WIT}
-    }).then(function(result) {
+  }).then(function(result) {
     console.log(JSON.stringify(result));
     var entities = JSON.parse(result).entities;
 
@@ -34,12 +34,11 @@ function ask_Wit(req, senderID)
     else {
       sendTextMessage(senderID, "Je n'ai pas compris...");
     }
-
   }).catch(function(err) {
     console.error("WIT API error: ", err);
   });
 }
 
-  module.exports = {
-    ask_Wit : ask_Wit
-  }
+module.exports = {
+  ask_Wit : ask_Wit
+}

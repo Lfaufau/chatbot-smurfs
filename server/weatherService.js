@@ -17,7 +17,6 @@ const WEATHER_API_TOKEN = (process.env.WEATHER_API_TOKEN) ?
   config.get('weatherApiToken');
 
 function getGeolocalisation(cityName, res) {
-  console.log("asking googlemaps");
   request({
     uri: 'https://maps.googleapis.com/maps/api/geocode/json',
     qs: {
