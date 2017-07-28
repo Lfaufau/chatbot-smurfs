@@ -45,7 +45,25 @@ function getWeatherForecast(address, recipientID) {
 
 }
 
+function getWeatherPrecipitation(address, recipientID) {
+  console.log(" Entering weatherforecast with address : " + address);
+  request({
+    uri: 'http://api.openweathermap.org/data/2.5/forecast/daily',
+    qs: {
+      APPID: WEATHER_API_TOKEN,
+      q : address,
+      cnt: 10,
+      units : "metric"
+    },
+    method: 'GET'
+  }).then(function(res) {
+    result = JSON.parse(res);
+    sendButtonReply(recipientID, "La précipitation est de " + result.list[0].temp.humidity + "%" + result.city.name + " aujourd'hui ", "Yahoo météo", getLinkYahoo(result.city.name));
+  });
+}
+
 module.exports =  {
   getGeolocalisation: getGeolocalisation,
-  getWeatherForecast: getWeatherForecast
+  getWeatherForecast: getWeatherForecast,
+  getWeatherPrecipitation: getWeatherPrecipitation
 }
