@@ -261,6 +261,5 @@ module.exports = {
   sendTyping: sendTyping,
   sendQuickReply: sendQuickReply,
   sendCarouselReply: sendCarouselReply,
-  getPhotoLocalisation: getPhotoLocalisation,
   sendGenericMessage: sendGenericMessage
 }

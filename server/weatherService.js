@@ -7,7 +7,6 @@ var sendTextMessage = chatService.sendTextMessage;
 var sendButtonReply = chatService.sendButtonReply;
 var getLinkYahoo = chatService.getLinkYahoo;
 var sendCarouselReply = chatService.sendCarouselReply;
-var getPhotoLocalisation = chatService.getPhotoLocalisation;
 
 // Get the config const
 const GOOGLE_API_TOKEN = (process.env.GOOGLE_API_TOKEN) ?
@@ -52,7 +51,5 @@ function getWeatherForecast(address, recipientID) {
 }
 
 module.exports =  {
-  getGeolocalisation: getGeolocalisation,
-  getWeatherForecast: getWeatherForecast,
-  getImage          : getImage
+  getWeatherForecast: getWeatherForecast
 }
