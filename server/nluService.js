@@ -81,13 +81,13 @@ function ask_Wit(req, senderID)
 
 function find_future(str)
 {
-  if (str.indexOf("demain") > -1)
-  {
-    return 1;
-  }
-  else if (str.indexOf("après-demain") > -1)
+  if (str.indexOf("après-demain") > -1)
   {
     return 2;
+  }
+  else if (str.indexOf("demain") > -1)
+  {
+    return 1;
   }
   else if (str.indexOf("la semaine prochaine") > -1)
   {
