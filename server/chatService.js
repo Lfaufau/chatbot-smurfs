@@ -200,18 +200,18 @@ function sendCarouselReply(recipientId, textMessage, ButtonTitle, ButtonLink, ph
           template_type: "generic",
           elements:[
            {
-            title:textMessage,
-            image_url:"https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=photo_reference&key=GOOGLE_API_TOKEN"
-            },
-            buttons:[
-              {
-                type:"web_url",
-                url:ButtonLink,
-                title:ButtonTitle,
-                messenger_extensions: true,
-                webview_height_ratio: "tall"
-              }
-            ]
+             title:textMessage,
+             image_url:"https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=" + photo_reference + "&key=" + GOOGLE_API_TOKEN
+           },
+           buttons:[
+             {
+               type:"web_url",
+               url:ButtonLink,
+               title:ButtonTitle,
+               messenger_extensions: true,
+               webview_height_ratio: "tall"
+            }
+          ]
         }
       }
     }
