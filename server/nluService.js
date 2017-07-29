@@ -75,7 +75,7 @@ function ask_Wit(req, senderID)
       understand = true;
       chatService.sendThanksMessage(senderID);
     }
-    if (!understand)
+    if (!understand) {
       console.log("7. Got something else");
       sendTextMessage(senderID, "Je n'ai pas compris...");
     }
