@@ -60,10 +60,10 @@ function receivedMessage(event) {
 
   var messageText = message.text;
   var messageAttachments = message.attachments;
-  chatService.sendTyping(recipientId);
+  chatService.sendTyping(senderID);
 
-  if (!userService.isUserKnown(recipientId)) {
-    chatService.addUserName(recipientId);
+  if (!userService.isUserKnown(senderID)) {
+    chatService.addUserName(senderID);
   }
 
   console.log("2. let's ask wit");
