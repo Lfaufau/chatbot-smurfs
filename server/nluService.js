@@ -23,10 +23,9 @@ function ask_Wit(req, senderID)
   }).then(function(result) {
     console.log("3. received answer from wit");
     console.log(JSON.stringify(result));
-    chatService.sendTyping(senderID);
 
     var entities = JSON.parse(result).entities;
-
+    var understand = false;
     var number = 0;
     console.log("4. computing the number of days");
     if (entities.number) {
@@ -45,6 +44,7 @@ function ask_Wit(req, senderID)
     console.log("6. result :"+ location + "now intent");
 
     if (entities.intent_meteo) {
+      understand = true;
       var meteo = entities.intent_meteo[0].value;
       if (location == "") {
         console.log("7. missing the city name");
@@ -66,9 +66,14 @@ function ask_Wit(req, senderID)
         weatherService.getWeatherVent(location, number, senderID);
       }
     }
-    else if (entities.intent_greeting) {
+    if (entities.intent_greeting) {
+      understand = true;
       console.log("7. Got greeting intent");
       sendGreeting(senderID);
+    }
+    if (entities.Thanks) {
+      understand = true;
+      chatService.sendThanksMessage(senderID);
     }
     else {
       console.log("7. Got something else");

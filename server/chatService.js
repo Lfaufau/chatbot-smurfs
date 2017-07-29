@@ -16,7 +16,7 @@ const VALIDATION_TOKEN = (process.env.MESSENGER_VALIDATION_TOKEN) ?
 
 var userService = require('../server/userService');
 
-function addUserName(senderID, res) {
+function addUserName(senderID) {
   var senderName = null;
   requestion(
     'https://graph.facebook.com/v2.6/' + senderID +
@@ -25,7 +25,6 @@ function addUserName(senderID, res) {
   ).then(function(result) {
     senderName = JSON.parse(result).first_name;
     userService.addUser(senderID, senderName);
-    res(senderName);
   }).catch(function(err) {
     console.error("Facebook API error: ", err);
   });
@@ -74,17 +73,21 @@ function sendTextMessage(recipientId, messageText) {
   callSendAPI(messageData);
 }
 
+function sendThanksMessage(recipientId) {
+  var userName = userService.getUser(recipientId);
+  var messageData = {
+    recipient: {
+      id: recipientId
+    },
+    message: {
+      text: "Je vous en prie, " + userName + " :)"
+    }
+  };
+  callSendAPI(messageData);
+}
+
 function sendGreetingMessage(recipientId) {
-  var userName = "";
-  if (!userService.isUserKnown(recipientId)) {
-    sendTyping(recipientId);
-    addUserName(recipientId, function(res) {
-      userName = res;
-    });
-  }
-  else {
-    userName = userService.getUser(recipientId);
-  }
+  var userName = userService.getUser(recipientId);
   var messageData = {
     recipient: {
       id: recipientId
@@ -224,6 +227,8 @@ module.exports = {
   sendButtonReply: sendButtonReply,
   getLinkYahoo: getLinkYahoo,
   sendGreetingMessage : sendGreetingMessage,
+  sendThanksMessage : sendThanksMessage,
+  addUserName : addUserName,
   sendTyping: sendTyping,
   sendQuickReply: sendQuickReply,
   sendCarouselReply: sendCarouselReply,

@@ -1,4 +1,5 @@
 var chatService     = require('../server/chatService');
+var userService     = require('../server/userService');
 var nluService      = require('../server/nluService');
 var authenticate    = chatService.authenticate;
 var sendTextMessage = chatService.sendTextMessage;
@@ -59,6 +60,11 @@ function receivedMessage(event) {
 
   var messageText = message.text;
   var messageAttachments = message.attachments;
+  chatService.sendTyping(recipientId);
+
+  if (!userService.isUserKnown(recipientId)) {
+    chatService.addUserName(recipientId);
+  }
 
   console.log("2. let's ask wit");
   nluService.ask_Wit(messageText, senderID);
