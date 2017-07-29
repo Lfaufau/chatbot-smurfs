@@ -65,6 +65,10 @@ function ask_Wit(req, senderID)
         console.log("7. Got wind intent");
         weatherService.getWeatherVent(location, number, senderID);
       }
+      else {
+        console.log("7. WTF?");
+        understand = false;
+      }
     }
     if (entities.intent_greeting) {
       understand = true;
