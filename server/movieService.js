@@ -24,6 +24,7 @@ function search(search, recipientID) {
       if (!movie) {
         continue;
       }
+      console.log("Film " + i + ": " + movie.originalTitle);
       var elt = {
        title: movie.originalTitle,
        image_url: movie.poster.href,
