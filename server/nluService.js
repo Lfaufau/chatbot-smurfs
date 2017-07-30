@@ -23,12 +23,14 @@ function ask_Wit(req, senderID)
   }).then(function(result) {
     console.log("3. received answer from wit");
     console.log(JSON.stringify(result));
-
+    var understand = false;
     var entities = JSON.parse(result).entities;
     if (entities.intent_meteo) {
+      understand = true;
       meteo(entities, senderID);
     }
     if (entities.intent_movie) {
+      understand = true;
       if (entities.movie) {
         movieService.search(entities.movie[0].value,senderID);
       }
