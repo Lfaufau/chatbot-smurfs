@@ -21,8 +21,7 @@ function search(search, recipientID) {
     console.log('Voici les données retournées par l\'API Allociné:');
     console.log(result);
 });*/
-
+}
 module.exports = {
   search : search
-}
 }
