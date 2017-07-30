@@ -5,15 +5,15 @@ const
 var requestion = require('request-promise');
 
 var chatService         = require('../server/chatService');
-var weatherService      = require('../server/weatherService.js');
-var getWeatherPrecipitation = weatherService.getWeatherPrecipitation;
-var getWeatherForecast  = weatherService.getWeatherForecast;
+var weatherService      = require('../server/weatherService');
+var movieService        = require('../server/movieService');
 var sendTextMessage     = chatService.sendTextMessage;
 var sendGreeting        = chatService.sendGreetingMessage;
 
 // Get the config const
 const WIT = (process.env.WIT_TOKEN) ?
   (process.env.WIT_TOKEN) : config.get('wit-token');
+
 
 function ask_Wit(req, senderID)
 {
@@ -25,49 +25,15 @@ function ask_Wit(req, senderID)
     console.log(JSON.stringify(result));
 
     var entities = JSON.parse(result).entities;
-    var understand = false;
-    var number = 0;
-    console.log("4. computing the number of days");
-    if (entities.number) {
-       number = entities.number[0].value;
-    }
-    else if (entities.demain) {
-       number = find_future(entities.demain[0].value);
-    }
-
-    console.log("5. result : " + number + " Let's compute location value");
-    var location = "";
-    if (entities.location) {
-      location = entities.location[0].value;
-    }
-
-    console.log("6. result :"+ location + "now intent");
-
     if (entities.intent_meteo) {
-      understand = true;
-      var meteo = entities.intent_meteo[0].value;
-      if (location == "") {
-        console.log("7. missing the city name");
-        sendTextMessage(senderID, "Veuillez préciser une ville s'il vous plait");
-      }
-      else if (meteo.indexOf("temperature") > -1 || meteo.indexOf("meteo") > -1)
-      {
-        console.log("7. Got meteo or temperature intent");
-        weatherService.getWeatherForecast(location, number, senderID);
-      }
-      else if (meteo.indexOf("précipitation") > -1)
-      {
-        console.log("7. Got rain intent");
-        weatherService.getWeatherPrecipitation(location, number, senderID);
-      }
-      else if (meteo.indexOf("Vent") > -1)
-      {
-        console.log("7. Got wind intent");
-        weatherService.getWeatherVent(location, number, senderID);
+      meteo(entities, senderID);
+    }
+    if (entities.intent_movie) {
+      if (entities.movie) {
+        movieService.search(entities.movie[0].value,senderID);
       }
       else {
-        console.log("7. WTF?");
-        understand = false;
+        sendTextMessage(senderID, "De quel film parlez-vous? N'oubliez pas de le mettre entre guillemets :)");
       }
     }
     if (entities.intent_greeting) {
@@ -86,6 +52,49 @@ function ask_Wit(req, senderID)
   }).catch(function(err) {
     console.error("WIT API error: ", err);
   });
+}
+
+function meteo(entities, recipientID)
+{
+  var number = 0;
+  console.log("4. computing the number of days");
+  if (entities.number) {
+     number = entities.number[0].value;
+  }
+  else if (entities.demain) {
+     number = find_future(entities.demain[0].value);
+  }
+  console.log("5. result : " + number + " Let's compute location value");
+  var location = "";
+  if (entities.location) {
+    location = entities.location[0].value;
+  }
+  else {
+    console.log("7. missing the city name");
+    sendTextMessage(senderID, "Veuillez préciser une ville s'il vous plait");
+  }
+  console.log("6. result :"+ location + "now intent");
+
+  var meteo = entities.intent_meteo[0].value;
+  if (meteo.indexOf("temperature") > -1 || meteo.indexOf("meteo") > -1)
+  {
+    console.log("7. Got meteo or temperature intent");
+    weatherService.getWeatherForecast(location, number, senderID);
+  }
+  else if (meteo.indexOf("précipitation") > -1)
+  {
+    console.log("7. Got rain intent");
+    weatherService.getWeatherPrecipitation(location, number, senderID);
+  }
+  else if (meteo.indexOf("Vent") > -1)
+  {
+    console.log("7. Got wind intent");
+    weatherService.getWeatherVent(location, number, senderID);
+  }
+  else {
+    console.log("7. WTF?");
+    sendTextMessage(senderID, "Je n'ai pas compris...");
+  }
 }
 
 function find_future(str)
