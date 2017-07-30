@@ -21,13 +21,13 @@ function search(search, recipientID) {
 
     var carousel = [
            {
-            title:movie.originalTitle,
+            title: movie.originalTitle,
             image_url: movie.poster.href,
-            subtitle:"Note des specateurs de : " + movie.statistics.userRating + " et de la presse : " + movie.statistics.pressRating,
+            subtitle:"Avec " + movie.castingShort.actors,
             buttons:[
               {
                 type:"web_url",
-                url:movie.link.href,
+                url:movie.link[0].href,
                 title:"voir sur allocine"
               }
             ]}];
