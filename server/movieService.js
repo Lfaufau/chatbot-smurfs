@@ -26,9 +26,9 @@ function search(search, recipientID) {
             subtitle:"Note des specateurs de : " + movie.statistics.userRating + " et de la presse : " + movie.statistics.pressRating,
             buttons:[
               {
-                "type":"voir sur allocine",
-                "url":"http://www.allocine.fr/film/fichefilm_gen_cfilm=27405.html",
-                "title":"View Website"
+                type:"web_url",
+                url:"http://www.allocine.fr/film/fichefilm_gen_cfilm=27405.html",
+                title:"voir sur allocine"
               }
             ]}];
     chatService.sendCarouselReply(recipientID, carousel);
