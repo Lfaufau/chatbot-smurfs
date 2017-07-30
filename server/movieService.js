@@ -11,7 +11,7 @@ function search(search, recipientID) {
 
     console.log('Voici les données retournées par l\'API Allociné:');
     console.log(results);
-    console.log(JSON.stringify(JSON.parse(results).feed.movie[0]));
+    console.log(results.feed.movie[0]);
     chatService.sendTextMessage(recipientID, "Données du film : " + search + " reçues!")
   });
 
