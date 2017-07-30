@@ -18,7 +18,7 @@ function search(search, recipientID) {
     for (var i = 0; i < min; ++i) {
       var movie = results.feed.movie[i];
       console.log(movie);
-      if (!movie) {
+      if (!movie || !movie.poster || !movie.castingShort || !movie.link) {
         continue;
       }
       console.log("Film " + i + ": " + movie.originalTitle);
