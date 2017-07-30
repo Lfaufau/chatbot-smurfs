@@ -22,12 +22,12 @@ function search(search, recipientID) {
     var carousel = [
            {
             title:movie.originalTitle,
-            image_url:"http://images.allocine.fr/medias/nmedia/18/95/15/80/20495053.jpg",
+            image_url: movie.poster.href,
             subtitle:"Note des specateurs de : " + movie.statistics.userRating + " et de la presse : " + movie.statistics.pressRating,
             buttons:[
               {
                 type:"web_url",
-                url:"http://www.allocine.fr/film/fichefilm_gen_cfilm=27405.html",
+                url:movie.link.href,
                 title:"voir sur allocine"
               }
             ]}];
