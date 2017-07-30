@@ -11,7 +11,6 @@ function search(search, recipientID) {
 
     console.log('Voici les données retournées par l\'API Allociné:');
     console.log(results);
-    console.log(results.feed.movie[0]);
 
     chatService.sendTextMessage(recipientID, "Produit en : " + results.feed.movie[0].productionYear + " et sorti le " + results.feed.movie[0].release.releaseDate);
     chatService.sendTextMessage(recipientID, "Note des spectateurs de : " + results.feed.movie[0].statistics.userRating
@@ -21,6 +20,10 @@ function search(search, recipientID) {
     var carousel = [];
     for (var i = 0; i < min; ++i) {
       var movie = results.feed.movie[i];
+      console.log(movie);
+      if (!movie) {
+        continue;
+      }
       var elt = {
        title: movie.originalTitle,
        image_url: movie.poster.href,

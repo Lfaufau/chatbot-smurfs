@@ -56,7 +56,7 @@ function ask_Wit(req, senderID)
   });
 }
 
-function meteo(entities, recipientID)
+function meteo(entities, senderID)
 {
   var number = 0;
   console.log("4. computing the number of days");
