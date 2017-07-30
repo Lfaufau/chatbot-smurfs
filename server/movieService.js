@@ -12,7 +12,7 @@ function search(search, recipientID) {
     console.log('Voici les données retournées par l\'API Allociné:');
     console.log(results);
 
-    var min = results.feed.totalResults < 5 ? results.feed.totalResults : 3;
+    var min = results.feed.totalResults < 10 ? results.feed.totalResults : 10;
     var carousel = [];
 
     for (var i = 0; i < min; ++i) {
