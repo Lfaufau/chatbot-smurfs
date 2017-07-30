@@ -13,8 +13,11 @@ function search(search, recipientID) {
     console.log(results);
     console.log(results.feed.movie[0]);
 
+    chatService.sendTextMessage(recipientID, "Produit en : " + results.feed.movie[0].productionYear + " et sorti le " + results.feed.movie[0].release.releaseDate);
+    chatService.sendTextMessage(recipientID, "Note des spectateurs de : " + results.feed.movie[0].statistics.userRating
+    + '\n' + " et de la presse : " + results.feed.movie[0].statistics.pressRating );
 
-    var min = results.feed.count < 5 ? results.feed.count : 5;
+    var min = results.feed.count < 3 ? results.feed.count : 3;
     var carousel = [];
     for (var i = 0; i < min; ++i) {
       var movie = results.feed.movie[i];
@@ -31,11 +34,7 @@ function search(search, recipientID) {
        }
       carousel.push(elt);
     }
-
     chatService.sendCarouselReply(recipientID, carousel);
-    chatService.sendTextMessage("Produit en : " + results.feed.movie[0].productionYear + " et sorti le " + results.feed.movie[0].release.releaseDate);
-    chatService.sendTextMessage(recipientID, "Note des specateurs de : " + results.feed.movie[0].statistics.userRating
-    + '\n' + " et de la presse : " + results.feed.movie[0].statistics.pressRating );
   });
 
 // Informations sur un film particulier
