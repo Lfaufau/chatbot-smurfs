@@ -12,7 +12,26 @@ function search(search, recipientID) {
     console.log('Voici les données retournées par l\'API Allociné:');
     console.log(results);
     console.log(results.feed.movie[0]);
-    chatService.sendTextMessage(recipientID, "Données du film : " + search + " reçues!")
+    var movie = results.feed.movie[0];
+    chatService.sendTextMessage(recipientID, "Resultats de la recherche : " + search + " reçues!");
+    chatService.sendTextMessage(recipientID, "Nom du film : " + movie.originalTitle
+    + '\n' + "produit en : " + movie.productionYear + " et sorti le " + movie.release.releaseDate);
+    chatService.sendTextMessage(recipientID, "Note des specateurs de : " + movie.statistics.userRating
+    + '\n' + " et de la presse : " + movie.statistics.pressRating );
+
+    var carousel = [
+           {
+            title:movie.originalTitle,
+            image_url:"http://images.allocine.fr/medias/nmedia/18/95/15/80/20495053.jpg",
+            subtitle:"Note des specateurs de : " + movie.statistics.userRating + " et de la presse : " + movie.statistics.pressRating,
+            buttons:[
+              {
+                "type":"voir sur allocine",
+                "url":"http://www.allocine.fr/film/fichefilm_gen_cfilm=27405.html",
+                "title":"View Website"
+              }
+            ]}];
+    chatService.sendCarouselReply(recipientID, carousel);
   });
 
 // Informations sur un film particulier
