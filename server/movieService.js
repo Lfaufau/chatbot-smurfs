@@ -27,7 +27,8 @@ function search(search, recipientID) {
            type:"web_url",
            url:movie.link[0].href,
            title:"voir sur allocine"
-         }
+         }]
+       }
       carousel.push(elt);
     }
 
