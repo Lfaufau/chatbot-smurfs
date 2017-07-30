@@ -12,8 +12,9 @@ function search(search, recipientID) {
     console.log('Voici les données retournées par l\'API Allociné:');
     console.log(results);
 
-    var min = results.feed.count < 3 ? results.feed.count : 3;
+    var min = results.feed.totalResults < 5 ? results.feed.totalResults : 3;
     var carousel = [];
+
     for (var i = 0; i < min; ++i) {
       var movie = results.feed.movie[i];
       console.log(movie);
@@ -34,7 +35,12 @@ function search(search, recipientID) {
        }
       carousel.push(elt);
     }
-    chatService.sendCarouselReply(recipientID, carousel);
+    if (min > 0) {
+      chatService.sendCarouselReply(recipientID, carousel);
+    }
+    else {
+      chatService.sendTextMessage(recipientID, "Aucun resultat, désolé :/");
+    }
   });
 
 // Informations sur un film particulier
