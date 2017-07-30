@@ -12,26 +12,29 @@ function search(search, recipientID) {
     console.log('Voici les données retournées par l\'API Allociné:');
     console.log(results);
     console.log(results.feed.movie[0]);
-    var movie = results.feed.movie[0];
-    chatService.sendTextMessage(recipientID, "Resultats de la recherche : " + search + " reçues!");
-    chatService.sendTextMessage(recipientID, "Nom du film : " + movie.originalTitle
-    + '\n' + "produit en : " + movie.productionYear + " et sorti le " + movie.release.releaseDate);
-    chatService.sendTextMessage(recipientID, "Note des specateurs de : " + movie.statistics.userRating
-    + '\n' + " et de la presse : " + movie.statistics.pressRating );
 
-    var carousel = [
-           {
-            title: movie.originalTitle,
-            image_url: movie.poster.href,
-            subtitle:"Avec " + movie.castingShort.actors,
-            buttons:[
-              {
-                type:"web_url",
-                url:movie.link[0].href,
-                title:"voir sur allocine"
-              }
-            ]}];
+
+    var min = results.feed.count < 5 ? results.feed.count : 5;
+    var carousel = [];
+    for (var i = 0; i < min; ++i) {
+      var movie = results.feed.movie[i];
+      var elt = {
+       title: movie.originalTitle,
+       image_url: movie.poster.href,
+       subtitle:"Avec " + movie.castingShort.actors,
+       buttons:[
+         {
+           type:"web_url",
+           url:movie.link[0].href,
+           title:"voir sur allocine"
+         }
+      carousel.push(elt);
+    }
+
     chatService.sendCarouselReply(recipientID, carousel);
+    chatService.sendTextMessage("Produit en : " + results.feed.movie[0].productionYear + " et sorti le " + results.feed.movie[0].release.releaseDate);
+    chatService.sendTextMessage(recipientID, "Note des specateurs de : " + results.feed.movie[0].statistics.userRating
+    + '\n' + " et de la presse : " + results.feed.movie[0].statistics.pressRating );
   });
 
 // Informations sur un film particulier
