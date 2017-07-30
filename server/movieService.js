@@ -18,7 +18,7 @@ function search(search, recipientID) {
     for (var i = 0; i < min; ++i) {
       var movie = results.feed.movie[i];
       console.log(movie);
-      if (!movie || !movie.poster || !movie.castingShort || !movie.link) {
+      if (!(movie) || !(movie.poster) || !movie.castingShort || !movie.link) {
         continue;
       }
       console.log("Film " + i + ": " + movie.originalTitle);
@@ -31,6 +31,9 @@ function search(search, recipientID) {
            type:"web_url",
            url:movie.link[0].href,
            title:"voir sur allocine"
+         },
+         {
+           type : "element_share"
          }]
        }
       carousel.push(elt);
