@@ -12,10 +12,6 @@ function search(search, recipientID) {
     console.log('Voici les données retournées par l\'API Allociné:');
     console.log(results);
 
-    chatService.sendTextMessage(recipientID, "Produit en : " + results.feed.movie[0].productionYear + " et sorti le " + results.feed.movie[0].release.releaseDate);
-    chatService.sendTextMessage(recipientID, "Note des spectateurs de : " + results.feed.movie[0].statistics.userRating
-    + '\n' + " et de la presse : " + results.feed.movie[0].statistics.pressRating );
-
     var min = results.feed.count < 3 ? results.feed.count : 3;
     var carousel = [];
     for (var i = 0; i < min; ++i) {
